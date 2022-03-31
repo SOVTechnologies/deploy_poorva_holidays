@@ -12,6 +12,7 @@ import 'package:poorvaholiday/screen/policies.dart';
 import 'package:poorvaholiday/screen/short_package_details/short_packages_details.dart';
 import 'package:poorvaholiday/screen/termsandConditions.dart';
 import 'package:poorvaholiday/utils/WebPayment.dart';
+import 'package:seo_renderer/helpers/renderer_state.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'screen/book_now/book_now.dart';
 import 'screen/search/search.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const HomeSection(),
+      navigatorObservers: [seoRouteObserver],
       getPages: [
         GetPage(name: Routes.home, page: () => const HomeSection()),
         GetPage(
