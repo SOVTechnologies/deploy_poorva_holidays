@@ -16,16 +16,16 @@ class Address extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(20),
+      margin: EdgeInsets.only(top: 10),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const PoorvaLogo(),
           TextView(
               customColor: ColorConstant.whiteColor,
               value:
-              "Shop No. 23, Yudhistir Building,\nOpp. N. L. Garden, N. L. Complex,\nDahisar (E), Mumbai 400068. Maharashtra",
+                  "Shop No. 23, Yudhistir Building,\nOpp. N. L. Garden, N. L. Complex,\nDahisar (E), Mumbai 400068. Maharashtra",
               fontSize: 14,
               fontWeight: FontWeight.normal),
 
@@ -33,10 +33,9 @@ class Address extends StatelessWidget {
           SizedBox(height: 20),
           TextView(
               customColor: ColorConstant.whiteColor,
-              value:"Custom Support :\n9930993825/7977628030/022-40031840",
+              value: "Custom Support :\n9930993825/7977628030/022-40031840",
               fontSize: 14,
               fontWeight: FontWeight.normal),
-
         ],
       ),
     );

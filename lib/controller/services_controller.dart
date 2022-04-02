@@ -5,6 +5,7 @@ import 'package:poorvaholiday/remote_services/api_calling.dart';
 import 'package:poorvaholiday/models/package_details.dart';
 
 class ServiceController extends GetxController {
+  RxBool isLoading = false.obs;
   List<ServicesResponse> servicesDetails = <ServicesResponse>[].obs;
 
   @override
@@ -13,11 +14,15 @@ class ServiceController extends GetxController {
   }
 
   getPackageList() {
-    ApiCalling().getResponse(Api.mainUrl + Api.services).then((value) {
-      int code = value.statusCode;
-      if (code == 200 || code == 201) {
-        servicesDetails.addAll(servicesResponseFromJson(value.body));
-      }
-    },);
+    isLoading.value = true;
+    ApiCalling().getResponse(Api.mainUrl + Api.services).then(
+      (value) {
+        int code = value.statusCode;
+        if (code == 200 || code == 201) {
+          servicesDetails.addAll(servicesResponseFromJson(value.body));
+          isLoading.value = false;
+        }
+      },
+    );
   }
 }

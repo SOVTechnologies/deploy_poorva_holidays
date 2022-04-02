@@ -49,8 +49,8 @@ dependencies:
   url_launcher: ^6.0.17
   carousel_slider: ^4.0.0
   http: ^0.13.4
-  seo_renderer: ^0.6.0
 #  flutter_swiper: ^1.1.6
+  smooth_page_indicator: ^1.0.0+2
   flutter_swiper_null_safety: ^1.0.2
   palette_generator: ^0.3.2
   firebase_core: ^1.11.0
@@ -58,6 +58,9 @@ dependencies:
   shimmer: ^2.0.0
   firebase_analytics: ^9.0.5
   webview_flutter: ^2.0.0-nullsafety.3
+  beamer: ^1.4.0+1
+  lottie: ^1.2.2
+  cached_network_image: ^3.2.0
 
 dev_dependencies:
   flutter_test:
@@ -90,6 +93,7 @@ flutter:
     - logo.png
     - animation.gif
     - ianimation.gif
+    - loder.json
 #    - banner_one.jpg
 #    - banner_two.jpg
 #    - banner_three.jpg

@@ -42,7 +42,8 @@ class WebFotter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: ColorConstant.blueColor,
-      height: 300,
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      height: 360,
       child: Column(
         children: [
           Row(
@@ -103,7 +104,6 @@ class WebFotter extends StatelessWidget {
                       Get.toNamed(Routes.privacyPolicy);
                     },
                   ),
-
                   const SizedBox(
                     width: 20,
                   ),
@@ -114,7 +114,6 @@ class WebFotter extends StatelessWidget {
                       Get.toNamed(Routes.cancellationPolicies);
                     },
                   ),
-
                   const SizedBox(
                     width: 20,
                   ),
@@ -125,7 +124,6 @@ class WebFotter extends StatelessWidget {
                       Get.toNamed(Routes.termsandConditions);
                     },
                   ),
-
                   const Spacer(),
                 ],
               ),
@@ -142,6 +140,3 @@ class WebFotter extends StatelessWidget {
     );
   }
 }
-
-
-

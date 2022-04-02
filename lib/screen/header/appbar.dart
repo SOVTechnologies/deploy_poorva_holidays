@@ -1,23 +1,31 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/instance_manager.dart';
+
 import 'package:poorvaholiday/constant/color_constant.dart';
 import 'package:poorvaholiday/constant/firebase_constants.dart';
 import 'package:poorvaholiday/controller/auth_controller.dart';
 import 'package:poorvaholiday/routes/routes.dart';
 import 'package:poorvaholiday/screen/auth_screen/loggedIn.dart';
+import 'package:poorvaholiday/screen/auth_screen/login.dart';
 import 'package:poorvaholiday/screen/auth_screen/register.dart';
 import 'package:poorvaholiday/screen/widgets/container_radius_boxdecorations.dart';
 import 'package:poorvaholiday/screen/widgets/custom_text.dart';
 import 'package:poorvaholiday/screen/widgets/gesturedectector_text.dart';
 import 'package:poorvaholiday/screen/widgets/imagedecoration.dart';
-import 'package:poorvaholiday/screen/auth_screen/login.dart';
 import 'package:poorvaholiday/screen/widgets/poorva_logo.dart';
 
 class PoorvaAppBar extends StatefulWidget {
-  const PoorvaAppBar({Key? key}) : super(key: key);
+  final EdgeInsetsGeometry? padding;
+  final Color? backgroundColor;
+  const PoorvaAppBar({
+    Key? key,
+    this.padding,
+    this.backgroundColor,
+  }) : super(key: key);
 
   @override
   _PoorvaAppBarState createState() => _PoorvaAppBarState();
@@ -28,20 +36,18 @@ class _PoorvaAppBarState extends State<PoorvaAppBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: ColorConstant.blueColor,
+      padding: widget.padding,
+      color: widget.backgroundColor ?? ColorConstant.blueColor,
       child: Row(
         children: [
           const MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: PoorvaLogo()),
-
-          //const PoorvaLogo(),
+              cursor: SystemMouseCursors.click, child: PoorvaLogo()),
           const Spacer(),
           GestureDetectorText(
             fontSize: 16,
             value: "Tour",
             onPressed: () {
-              Get.toNamed(Routes.home);
+              Beamer.of(context).beamToNamed(Routes.tour);
             },
           ),
           const SizedBox(
@@ -51,7 +57,7 @@ class _PoorvaAppBarState extends State<PoorvaAppBar> {
             fontSize: 16,
             value: "About Us",
             onPressed: () {
-              Get.toNamed(Routes.aboutus);
+              Beamer.of(context).beamToNamed(Routes.aboutus);
             },
           ),
           const SizedBox(
@@ -61,7 +67,7 @@ class _PoorvaAppBarState extends State<PoorvaAppBar> {
             fontSize: 16,
             value: "Contact Us",
             onPressed: () {
-              Get.toNamed(Routes.contactus);
+              Beamer.of(context).beamToNamed(Routes.contactus);
             },
           ),
           const SizedBox(

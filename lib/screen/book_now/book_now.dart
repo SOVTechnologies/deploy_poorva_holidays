@@ -10,7 +10,7 @@ import 'package:poorvaholiday/controller/booking_controller.dart';
 import 'package:poorvaholiday/controller/cost_controller.dart';
 import 'package:poorvaholiday/screen/header/appbar.dart';
 import 'package:poorvaholiday/screen/widgets/container_button.dart';
-import 'package:poorvaholiday/screen/widgets/custom_loader.dart';
+import 'package:poorvaholiday/screen/widgets/Loader/custom_loader.dart';
 import 'package:poorvaholiday/screen/widgets/custom_text.dart';
 import 'package:poorvaholiday/utils/responsive.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -32,12 +32,8 @@ class _BookNowState extends State<BookNow> {
   dynamic argument = Get.arguments;
   BookingController bookingController = Get.put(BookingController());
 
-
-
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size(MediaQuery.of(context).size.width, 150),
@@ -185,7 +181,7 @@ class _BookNowState extends State<BookNow> {
     );
   }
 
-  double finalPrice = 0 ;
+  double finalPrice = 0;
   Widget buildPriceExpanded(CostController singlePackage) {
     return Container(
       margin: EdgeInsets.all(ConstantSize().iteneraryContentMargin(context)),
@@ -256,9 +252,12 @@ class _BookNowState extends State<BookNow> {
                     User? user = FirebaseAuth.instance.currentUser;
                     if (user != null) {
                       setState(() {
-                        finalPrice  =double.parse((singlePackage.totalPrice + (singlePackage.totalPrice*0.18)).toStringAsFixed(2));
+                        finalPrice = double.parse((singlePackage.totalPrice +
+                                (singlePackage.totalPrice * 0.18))
+                            .toStringAsFixed(2));
                       });
-                      bookingController.getBookingID(finalPrice,argument[0], user, singlePackage.customCost);
+                      bookingController.getBookingID(finalPrice, argument[0],
+                          user, singlePackage.customCost);
                     } else {
                       Get.snackbar("Error", 'Please Login or register',
                           maxWidth: 500,
@@ -270,7 +269,7 @@ class _BookNowState extends State<BookNow> {
                   },
                   title: singlePackage.totalPrice == 0
                       ? 'Proceed For Payment '
-                      : 'Proceed For Payment ${(singlePackage.totalPrice + (singlePackage.totalPrice*0.18)).toStringAsFixed(2)} Including GST 18%',
+                      : 'Proceed For Payment ${(singlePackage.totalPrice + (singlePackage.totalPrice * 0.18)).toStringAsFixed(2)} Including GST 18%',
                   backGroundColor: ColorConstant.blueColor)
               : Center(
                   child: CustomLoader(),

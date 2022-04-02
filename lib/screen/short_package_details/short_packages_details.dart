@@ -9,7 +9,7 @@ import 'package:poorvaholiday/screen/header/appbar.dart';
 import 'package:poorvaholiday/screen/short_package_details/hotel_suggestions.dart';
 import 'package:poorvaholiday/screen/short_package_details/short_package_content.dart';
 import 'package:poorvaholiday/screen/tours/tour_suggestions.dart';
-import 'package:poorvaholiday/screen/widgets/custom_loader.dart';
+import 'package:poorvaholiday/screen/widgets/Loader/custom_loader.dart';
 import 'package:poorvaholiday/screen/widgets/imagedecoration.dart';
 import 'package:poorvaholiday/utils/responsive.dart';
 
@@ -50,7 +50,8 @@ class _ShortPackagesDetailsState extends State<ShortPackagesDetails> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildImageExpanded(controller, context, MediaQuery.of(context).size.width),
+              buildImageExpanded(
+                  controller, context, MediaQuery.of(context).size.width),
               SizedBox(
                 height: 200,
                 width: MediaQuery.of(context).size.width,
@@ -118,12 +119,18 @@ class _ShortPackagesDetailsState extends State<ShortPackagesDetails> {
         child: HotelSuggestions(
           date: "",
           height: ConstantSize().getTourHeight(context),
-          location: controller.packageDetailsResponse.packageStay[index].location,
-          id: controller.packageDetailsResponse.packageStay[index].nights.toString(),
+          location:
+              controller.packageDetailsResponse.packageStay[index].location,
+          id: controller.packageDetailsResponse.packageStay[index].nights
+              .toString(),
           imageName: controller.packageDetailsResponse.packageStay[index].image,
-          initalRating: controller.packageDetailsResponse.packageStay[index].rating.toDouble(),
-          packageName: controller.packageDetailsResponse.packageStay[index].hotel,
-          price: '${controller.packageDetailsResponse.packageStay[index].nights.toString()} Night',
+          initalRating: controller
+              .packageDetailsResponse.packageStay[index].rating
+              .toDouble(),
+          packageName:
+              controller.packageDetailsResponse.packageStay[index].hotel,
+          price:
+              '${controller.packageDetailsResponse.packageStay[index].nights.toString()} Night',
         ),
       ),
     );

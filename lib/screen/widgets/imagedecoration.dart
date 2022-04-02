@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'custom_imgae_loader.dart';
-import 'custom_loader.dart';
+import 'Loader/custom_loader.dart';
 
 class ContainerImageDecorations extends StatelessWidget {
   String imageName;
@@ -44,14 +44,13 @@ class ContainerImageDecorations extends StatelessWidget {
                       fit: BoxFit.cover,
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent? loadingProgress) {
-                        if(loadingProgress==null){
-                            return child;
-                        }else{
+                        if (loadingProgress == null) {
+                          return child;
+                        } else {
                           return CustomImageLoader();
                         }
                       },
                     )
-
                   : Image.asset(
                       imageName,
                       height: height,
@@ -66,4 +65,3 @@ class ContainerImageDecorations extends StatelessWidget {
     );
   }
 }
-

@@ -4,7 +4,7 @@ import 'package:poorvaholiday/constant/color_constant.dart';
 import 'package:poorvaholiday/controller/about_us_controller.dart';
 import 'package:poorvaholiday/screen/header/appbar.dart';
 import 'package:poorvaholiday/screen/widgets/container_radius_boxdecorations.dart';
-import 'package:poorvaholiday/screen/widgets/custom_loader.dart';
+import 'package:poorvaholiday/screen/widgets/Loader/custom_loader.dart';
 import 'package:poorvaholiday/screen/widgets/imagedecoration.dart';
 import 'package:poorvaholiday/screen/widgets/custom_text.dart';
 import 'package:poorvaholiday/utils/responsive.dart';
@@ -82,7 +82,6 @@ class AboutUs extends StatelessWidget {
                           : CustomLoader();
                     }),
               )),
-
             ],
           ),
           width: MediaQuery.of(context).size.width,
