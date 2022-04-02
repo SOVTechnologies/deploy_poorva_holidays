@@ -17,20 +17,28 @@ import 'package:url_launcher/url_launcher.dart';
 import '../packageDetails.dart';
 
 class ShortPackageContent extends StatelessWidget {
-  PackageDetailsResponse packagesDetails;
-  ShortPackageContent({
-    Key? key,
-    required this.packagesDetails
-  }) : super(key: key);
+  final PackageDetailsResponse packagesDetails;
+  const ShortPackageContent({Key? key, required this.packagesDetails})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        margin: EdgeInsets.all(30),
+        margin: const EdgeInsets.only(top: 90, left: 20, right: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            TextView(
+              style: TextView.headerStyle(
+                size: 30,
+                weight: FontWeight.bold,
+                color: ColorConstant.blueColor,
+              ),
+              value:
+                  '${packagesDetails.packageTotalDays} days ${packagesDetails.packageTotalNight} in ${packagesDetails.packageTitle}',
+            ),
+            SizedBox(height: 5),
             RatingBar.builder(
               initialRating: packagesDetails.packageAverageRating.toDouble(),
               itemCount: 5,
@@ -46,65 +54,68 @@ class ShortPackageContent extends StatelessWidget {
               },
               onRatingUpdate: (double value) {},
             ),
-            TextView(
-                customColor: ColorConstant.blueColor,
-                value: '${packagesDetails.packageTotalDays} days ${packagesDetails.packageTotalNight} in ${packagesDetails.packageTitle}',
-                fontSize: 16,
-                fontWeight: FontWeight.w600),
-             SizedBox(
-              height: 2,
+            const SizedBox(
+              height: 5,
             ),
             CustomDivier(
                 width: 150,
                 height: 2,
                 customColor: ColorConstant.blueColor,
                 edgeInsets: EdgeInsets.zero),
-            TextWithIcon(icon: Icons.location_on, title: packagesDetails.packageCity),
-             SizedBox(
+            const SizedBox(
+              height: 5,
+            ),
+            TextWithIcon(
+                icon: Icons.location_on, title: packagesDetails.packageCity),
+            const SizedBox(
               height: 10,
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.4,
               child: TextView(
                   customColor: ColorConstant.blueColor,
-                  value:packagesDetails.packageInfo,
+                  value: packagesDetails.packageInfo,
                   fontSize: 13,
+                  align: TextAlign.left,
                   fontWeight: FontWeight.normal),
             ),
-            CustomDivier(
-                width: MediaQuery.of(context).size.width * 0.4,
-                height: 1,
-                customColor: ColorConstant.blueColor,
-                edgeInsets: const EdgeInsets.only(top: 10, bottom: 10)),
+            const SizedBox(
+              height: 10,
+            ),
             TextWithIcon(
-                icon: Icons.family_restroom_sharp, title: packagesDetails.packageTheme[0]),
-             const SizedBox(height: 10),
-            TextWithIcon(
-                icon: FontAwesomeIcons.rainbow, title: packagesDetails.packageSeason),
+                icon: Icons.family_restroom_sharp,
+                title: packagesDetails.packageTheme[0]),
             const SizedBox(height: 10),
             TextWithIcon(
-                icon: Icons.date_range_outlined, title: packagesDetails.packageStartDate),
+                icon: FontAwesomeIcons.rainbow,
+                title: packagesDetails.packageSeason),
+            const SizedBox(height: 10),
+            TextWithIcon(
+                icon: Icons.date_range_outlined,
+                title: packagesDetails.packageStartDate),
             const SizedBox(height: 10),
             TextWithIcon(
                 icon: Icons.local_activity_outlined,
                 title: "No Activity Included"),
-            const  SizedBox(height: 15),
+            const SizedBox(height: 15),
             Row(
               children: [
                 ContainerButton(
                   onTap: () {
-                    String url  = Api.mainUrl + Api.file + packagesDetails.packageId;
+                    String url =
+                        Api.mainUrl + Api.file + packagesDetails.packageId;
                     _launchURL(url);
                   },
                   title: "Download Boucher",
                   backGroundColor: ColorConstant.orangeColor,
                 ),
-                 SizedBox(
+                SizedBox(
                   width: 20,
                 ),
                 ContainerButton(
                     onTap: () {
-                      Get.toNamed(Routes.packagesdetails,arguments:packagesDetails.packageId );
+                      Get.toNamed(Routes.packagesdetails,
+                          arguments: packagesDetails.packageId);
                     },
                     title: "Details Itinerary",
                     backGroundColor: ColorConstant.blueColor),
@@ -115,6 +126,7 @@ class ShortPackageContent extends StatelessWidget {
       ),
     );
   }
+
   void _launchURL(String url) async {
     if (!await launch(url)) throw 'Could not launch $url';
   }

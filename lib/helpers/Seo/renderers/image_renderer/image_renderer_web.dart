@@ -86,14 +86,14 @@ class _ImageRendererState extends RendererState<ImageRenderer> {
       size: size,
       child: Stack(
         children: [
-          SizeWidget(
-            onSize: onSize,
-            child: widget.child,
-          ),
           if (size != null && visible)
             IgnorePointer(
               child: HtmlElementView(viewType: viewType),
             ),
+          SizeWidget(
+            onSize: onSize,
+            child: widget.child,
+          ),
         ],
       ),
     );

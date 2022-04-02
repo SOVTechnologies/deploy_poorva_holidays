@@ -18,16 +18,30 @@ RoutesLocationBuilder routeLocations(BuildContext context) =>
     RoutesLocationBuilder(routes: {
       Routes.home: (BuildContext context, BeamState state, data) =>
           const BeamPage(
-              title: 'Welcome to Poorva holidays', child: HomeSection()),
+            title: 'Welcome to Poorva holidays',
+            child: HomeSection(),
+          ),
       Routes.shortpackagesdetails:
-          (BuildContext context, BeamState state, data) =>
-              const ShortPackagesDetails(),
+          (BuildContext context, BeamState state, data) {
+        final String? packageId = state.queryParameters['id'];
+        final String? title = state.queryParameters['title'];
+        return BeamPage(
+          title: '$title - Poorva holidays',
+          child: ShortPackagesDetails(
+            packageId: packageId!,
+          ), // ShortPackagesDetails(),
+        );
+      },
       Routes.packagesdetails: (BuildContext context, BeamState state, data) =>
           const PackagesDetails(),
       Routes.preBookingPackageDetails:
           (BuildContext context, BeamState state, data) => const BookNow(),
-      Routes.aboutus: (BuildContext context, BeamState state, data) =>
-          const ContactUs(),
+      Routes.contactus: (BuildContext context, BeamState state, data) {
+        return const BeamPage(
+          title: 'Contact Us - Poorva holidays',
+          child: ContactUs(),
+        );
+      },
       Routes.searchPage: (BuildContext context, BeamState state, data) =>
           Search(),
       Routes.razorPay: (BuildContext context, BeamState state, data) =>
@@ -46,7 +60,9 @@ List<GetPage<dynamic>> pages() => [
       GetPage(name: Routes.home, page: () => const HomeSection()),
       GetPage(
           name: Routes.shortpackagesdetails,
-          page: () => const ShortPackagesDetails()),
+          page: () => const ShortPackagesDetails(
+                packageId: '',
+              )),
       GetPage(
           name: Routes.packagesdetails, page: () => const PackagesDetails()), //
       GetPage(

@@ -21,10 +21,16 @@ import 'package:poorvaholiday/screen/widgets/poorva_logo.dart';
 class PoorvaAppBar extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
   final Color? backgroundColor;
+  final Color? textColor;
+  final bool isShowlogo;
+  final Color? shortBackground;
   const PoorvaAppBar({
     Key? key,
     this.padding,
     this.backgroundColor,
+    this.textColor,
+    this.isShowlogo = true,
+    this.shortBackground,
   }) : super(key: key);
 
   @override
@@ -36,61 +42,70 @@ class _PoorvaAppBarState extends State<PoorvaAppBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: widget.padding,
-      color: widget.backgroundColor ?? ColorConstant.blueColor,
+      height: 70,
+      padding: widget.shortBackground == null
+          ? widget.padding
+          : const EdgeInsets.only(left: 20),
+      color: widget.backgroundColor ?? Colors.transparent,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const MouseRegion(
-              cursor: SystemMouseCursors.click, child: PoorvaLogo()),
-          const Spacer(),
-          GestureDetectorText(
-            fontSize: 16,
-            value: "Tour",
-            onPressed: () {
-              Beamer.of(context).beamToNamed(Routes.tour);
-            },
-          ),
-          const SizedBox(
-            width: 20,
-          ),
-          GestureDetectorText(
-            fontSize: 16,
-            value: "About Us",
-            onPressed: () {
-              Beamer.of(context).beamToNamed(Routes.aboutus);
-            },
-          ),
-          const SizedBox(
-            width: 20,
-          ),
-          GestureDetectorText(
-            fontSize: 16,
-            value: "Contact Us",
-            onPressed: () {
-              Beamer.of(context).beamToNamed(Routes.contactus);
-            },
-          ),
-          const SizedBox(
-            width: 20,
-          ),
-          Obx(
-            () => registerController.dataAvailable == true
-                ? buildPostLoign()
-                : Row(
-                    children: [
-                      buildLogin(),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      buildRegister(),
-                    ],
-                  ),
-          ),
-          const SizedBox(
-            width: 50,
-          ),
+          widget.isShowlogo
+              ? Container(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  alignment: Alignment.centerLeft,
+                  child: const MouseRegion(
+                      cursor: SystemMouseCursors.click, child: PoorvaLogo()),
+                )
+              : Container(),
+          widget.shortBackground != null
+              ? Container(
+                  color: widget.shortBackground ?? ColorConstant.blueColor,
+                  padding: widget.padding,
+                  child: buildNavItems(context))
+              : buildNavItems(context)
         ],
       ),
+    );
+  }
+
+  buildNavItems(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        GestureDetectorText(
+          fontSize: 16,
+          textColor: widget.textColor ?? Colors.white,
+          value: "Home",
+          onPressed: () {
+            Beamer.of(context).beamToNamed(Routes.home);
+          },
+          herf: Routes.home,
+        ),
+        GestureDetectorText(
+          fontSize: 16,
+          value: "Contact Us",
+          textColor: widget.textColor ?? Colors.white,
+          onPressed: () {
+            Beamer.of(context).beamToNamed(Routes.contactus);
+          },
+          herf: Routes.aboutus,
+        ),
+        Obx(
+          () => registerController.dataAvailable == true
+              ? buildPostLoign()
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    buildLogin(),
+                    buildRegister(),
+                  ],
+                ),
+        ),
+      ],
     );
   }
 
@@ -118,63 +133,69 @@ class _PoorvaAppBarState extends State<PoorvaAppBar> {
 
   GestureDetectorText buildLogin() {
     return GestureDetectorText(
-        fontSize: 16,
-        value: "Login",
-        onPressed: () {
-          Get.defaultDialog(
-              radius: 0.0,
-              title: "",
-              contentPadding: EdgeInsets.zero,
-              content: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ContainerBoxradiusDecorations(
-                      child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: TextView(
-                            fontSize: 25,
-                            fontWeight: FontWeight.normal,
-                            value: "Welcome to \nPoorva Holiday",
-                            customColor: ColorConstant.whiteColor),
-                      ),
-                      borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(20),
-                        topRight: Radius.circular(20),
-                      )),
-                  Login()
-                ],
-              ));
-        });
+      fontSize: 16,
+      value: "Login",
+      textColor: widget.textColor ?? Colors.white,
+      onPressed: () {
+        Get.defaultDialog(
+            radius: 0.0,
+            title: "",
+            contentPadding: EdgeInsets.zero,
+            content: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ContainerBoxradiusDecorations(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: TextView(
+                          fontSize: 25,
+                          fontWeight: FontWeight.normal,
+                          value: "Welcome to \nPoorva Holiday",
+                          customColor: ColorConstant.whiteColor),
+                    ),
+                    borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    )),
+                Login()
+              ],
+            ));
+      },
+      herf: '',
+    );
   }
 
   GestureDetectorText buildRegister() {
     return GestureDetectorText(
-        fontSize: 16,
-        value: "Register",
-        onPressed: () {
-          Get.defaultDialog(
-              radius: 0.0,
-              title: "",
-              contentPadding: EdgeInsets.zero,
-              content: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ContainerBoxradiusDecorations(
-                      child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: TextView(
-                            fontSize: 25,
-                            fontWeight: FontWeight.normal,
-                            value: "Register with \nPoorva Holiday",
-                            customColor: ColorConstant.whiteColor),
-                      ),
-                      borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(20),
-                        topRight: Radius.circular(20),
-                      )),
-                  RegisterScreen()
-                ],
-              ));
-        });
+      fontSize: 16,
+      value: "Register",
+      textColor: widget.textColor ?? Colors.white,
+      onPressed: () {
+        Get.defaultDialog(
+            radius: 0.0,
+            title: "",
+            contentPadding: EdgeInsets.zero,
+            content: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ContainerBoxradiusDecorations(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: TextView(
+                          fontSize: 25,
+                          fontWeight: FontWeight.normal,
+                          value: "Register with \nPoorva Holiday",
+                          customColor: ColorConstant.whiteColor),
+                    ),
+                    borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    )),
+                RegisterScreen()
+              ],
+            ));
+      },
+      herf: '',
+    );
   }
 }

@@ -45,7 +45,7 @@ class _LinkRendererState extends RendererState<LinkRenderer> {
       (_) => AnchorElement(href: widget.href)
         ..text = widget.text
         ..style.fontSize = '14px'
-        ..style.color = '#ff0000'
+        ..style.color = '#00000000'
         ..style.margin = '0px'
         ..style.padding = '0px'
         ..style.width = '${size?.width ?? 0}px'
