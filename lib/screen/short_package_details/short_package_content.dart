@@ -1,3 +1,4 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -38,7 +39,7 @@ class ShortPackageContent extends StatelessWidget {
               value:
                   '${packagesDetails.packageTotalDays} days ${packagesDetails.packageTotalNight} in ${packagesDetails.packageTitle}',
             ),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             RatingBar.builder(
               initialRating: packagesDetails.packageAverageRating.toDouble(),
               itemCount: 5,
@@ -114,8 +115,8 @@ class ShortPackageContent extends StatelessWidget {
                 ),
                 ContainerButton(
                     onTap: () {
-                      Get.toNamed(Routes.packagesdetails,
-                          arguments: packagesDetails.packageId);
+                      Beamer.of(context).beamToNamed(
+                          '${Routes.packagesdetails}?id=${packagesDetails.packageId}&title=${packagesDetails.packageTitle}');
                     },
                     title: "Details Itinerary",
                     backGroundColor: ColorConstant.blueColor),

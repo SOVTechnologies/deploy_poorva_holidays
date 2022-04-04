@@ -1,17 +1,21 @@
+import 'dart:html' as html;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 import 'package:poorvaholiday/constant/color_constant.dart';
 import 'package:poorvaholiday/constant/constant_size.dart';
 import 'package:poorvaholiday/controller/download_broucher.dart';
 import 'package:poorvaholiday/controller/package_controller.dart';
 import 'package:poorvaholiday/controller/single_package_info.dart';
-import 'package:poorvaholiday/remote_services/api.dart';
 import 'package:poorvaholiday/models/package_details.dart';
+import 'package:poorvaholiday/remote_services/api.dart';
 import 'package:poorvaholiday/routes/routes.dart';
 import 'package:poorvaholiday/utils/responsive.dart';
-import 'package:url_launcher/url_launcher.dart';
+
 import 'footer/footer.dart';
 import 'header/appbar.dart';
 import 'itinerarySection/cancellation_policy.dart';
@@ -21,20 +25,22 @@ import 'itinerarySection/inclusion_and_exclusion.dart';
 import 'itinerarySection/iteneraryDetails.dart';
 import 'widgets/container_button.dart';
 import 'widgets/custom_divider.dart';
+import 'widgets/custom_text.dart';
 import 'widgets/imagedecoration.dart';
 import 'widgets/text_with_Icon.dart';
-import 'widgets/custom_text.dart';
-import 'dart:html' as html;
 
 class PackagesDetails extends StatefulWidget {
-  const PackagesDetails({Key? key}) : super(key: key);
+  final String packageId;
+  const PackagesDetails({
+    Key? key,
+    required this.packageId,
+  }) : super(key: key);
 
   @override
   _PackagesDetailsState createState() => _PackagesDetailsState();
 }
 
 class _PackagesDetailsState extends State<PackagesDetails> {
-  var packageid = Get.arguments;
   late var costID;
   int index = 0;
   List<Widget> myWidget = [];
@@ -53,7 +59,7 @@ class _PackagesDetailsState extends State<PackagesDetails> {
           margin:
               EdgeInsets.all(ConstantSize().iteneraryContentMargin(context)),
           child: GetBuilder<SinglePackgeInfo>(
-              init: SinglePackgeInfo(packageid: packageid),
+              init: SinglePackgeInfo(packageid: widget.packageId),
               builder: (controller) {
                 costID = controller.packageDetailsResponse.packageCost;
                 myWidget = [
@@ -81,9 +87,12 @@ class _PackagesDetailsState extends State<PackagesDetails> {
                         //TODO add this to swiper
                         ContainerImageDecorations(
                           width: MediaQuery.of(context).size.width * 0.4,
-                          height: ConstantSize().getiteneraryTourHeight(context),
-                          imageName: controller.packageDetailsResponse.packageThumbailLink,
-                          borderRadius: const BorderRadius.all(Radius.circular(20)),
+                          height:
+                              ConstantSize().getiteneraryTourHeight(context),
+                          imageName: controller
+                              .packageDetailsResponse.packageThumbailLink,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(20)),
                           opacity: 0,
                           child: Container(),
                         ),
@@ -104,7 +113,6 @@ class _PackagesDetailsState extends State<PackagesDetails> {
                         customColor: ColorConstant.blueColor,
                         edgeInsets: EdgeInsets.zero),
                     myWidget[index],
-
                   ],
                 );
               }),
@@ -134,7 +142,9 @@ class _PackagesDetailsState extends State<PackagesDetails> {
                       : ColorConstant.orangeColor,
                   radius: 3,
                 ),
-                SizedBox(width: 8,),
+                SizedBox(
+                  width: 8,
+                ),
                 MouseRegion(
                   cursor: SystemMouseCursors.click,
                   child: TextView(
@@ -166,7 +176,9 @@ class _PackagesDetailsState extends State<PackagesDetails> {
                       : ColorConstant.orangeColor,
                   radius: 3,
                 ),
-                SizedBox(width: 8,),
+                SizedBox(
+                  width: 8,
+                ),
                 MouseRegion(
                   cursor: SystemMouseCursors.click,
                   child: TextView(
@@ -198,7 +210,9 @@ class _PackagesDetailsState extends State<PackagesDetails> {
                       : ColorConstant.orangeColor,
                   radius: 3,
                 ),
-                SizedBox(width: 8,),
+                SizedBox(
+                  width: 8,
+                ),
                 MouseRegion(
                   cursor: SystemMouseCursors.click,
                   child: TextView(
@@ -230,7 +244,9 @@ class _PackagesDetailsState extends State<PackagesDetails> {
                       : ColorConstant.orangeColor,
                   radius: 3,
                 ),
-                SizedBox(width: 8,),
+                SizedBox(
+                  width: 8,
+                ),
                 MouseRegion(
                   cursor: SystemMouseCursors.click,
                   child: TextView(
@@ -262,7 +278,9 @@ class _PackagesDetailsState extends State<PackagesDetails> {
                       : ColorConstant.orangeColor,
                   radius: 3,
                 ),
-                SizedBox(width: 8,),
+                SizedBox(
+                  width: 8,
+                ),
                 MouseRegion(
                   cursor: SystemMouseCursors.click,
                   child: TextView(
@@ -299,7 +317,6 @@ class _PackagesDetailsState extends State<PackagesDetails> {
               height: 2,
               customColor: ColorConstant.blueColor,
               edgeInsets: EdgeInsets.zero),
-
           Padding(
             padding: const EdgeInsets.only(left: 5.0),
             child: Reponsivenes.isLargeScreen(context)
@@ -369,7 +386,7 @@ class _PackagesDetailsState extends State<PackagesDetails> {
             width: MediaQuery.of(context).size.width * 0.4,
             child: TextView(
                 customColor: ColorConstant.blueColor,
-                value:packageDetailsResponse.packageInfo,
+                value: packageDetailsResponse.packageInfo,
                 fontSize: 13,
                 fontWeight: FontWeight.normal),
           ),
@@ -418,7 +435,7 @@ class _PackagesDetailsState extends State<PackagesDetails> {
                   children: [
                     ContainerButton(
                       onTap: () {
-                        String url = Api.mainUrl + Api.file + packageid;
+                        String url = Api.mainUrl + Api.file + widget.packageId;
                         _launchURL(url);
                       },
                       title: "Download Broucher",
@@ -430,7 +447,7 @@ class _PackagesDetailsState extends State<PackagesDetails> {
                     ContainerButton(
                         onTap: () {
                           Get.toNamed(Routes.preBookingPackageDetails,
-                              arguments: [packageid, costID]);
+                              arguments: [widget.packageId, costID]);
                         },
                         title: "Book Now",
                         backGroundColor: ColorConstant.blueColor),
@@ -440,7 +457,7 @@ class _PackagesDetailsState extends State<PackagesDetails> {
                   children: [
                     ContainerButton(
                       onTap: () {
-                        String url = Api.mainUrl + Api.file + packageid;
+                        String url = Api.mainUrl + Api.file + widget.packageId;
                         _launchURL(url);
                       },
                       title: "Download Broucher",
@@ -452,7 +469,7 @@ class _PackagesDetailsState extends State<PackagesDetails> {
                     ContainerButton(
                         onTap: () {
                           Get.toNamed(Routes.preBookingPackageDetails,
-                              arguments: [packageid, costID]);
+                              arguments: [widget.packageId, costID]);
                         },
                         title: "Book Now",
                         backGroundColor: ColorConstant.blueColor),
@@ -478,7 +495,8 @@ class _PackagesDetailsState extends State<PackagesDetails> {
     );
   }
 
-  GestureDetector gestureDetector(int index, PackageDetailsResponse packageDetailsResponse) {
+  GestureDetector gestureDetector(
+      int index, PackageDetailsResponse packageDetailsResponse) {
     return GestureDetector(
       onTap: () {
         Get.defaultDialog(

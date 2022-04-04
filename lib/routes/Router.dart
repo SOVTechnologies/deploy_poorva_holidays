@@ -2,6 +2,7 @@ import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:poorvaholiday/routes/routes.dart';
+import 'package:poorvaholiday/screen/AuthScreen/Authentication.dart';
 import 'package:poorvaholiday/screen/aboutUs/about_us.dart';
 import 'package:poorvaholiday/screen/book_now/book_now_copy.dart';
 import 'package:poorvaholiday/screen/cancellationPolicies.dart';
@@ -32,8 +33,26 @@ RoutesLocationBuilder routeLocations(BuildContext context) =>
           ), // ShortPackagesDetails(),
         );
       },
-      Routes.packagesdetails: (BuildContext context, BeamState state, data) =>
-          const PackagesDetails(),
+      Routes.authentication: (BuildContext context, BeamState state, data) {
+        final String? type = state.queryParameters['type'];
+        return BeamPage(
+          title: '$type - Poorva holidays',
+          child: Authentication(
+            type: type!,
+          ),
+        );
+      },
+      Routes.packagesdetails: (BuildContext context, BeamState state, data) {
+        final String? packageId = state.queryParameters['id'];
+        final String? title = state.queryParameters['title'];
+        return BeamPage(
+          title: '$title - Poorva holidays',
+          child: PackagesDetails(
+            packageId: packageId!,
+            // packageId: packageId!,
+          ),
+        );
+      },
       Routes.preBookingPackageDetails:
           (BuildContext context, BeamState state, data) => const BookNow(),
       Routes.contactus: (BuildContext context, BeamState state, data) {
@@ -63,8 +82,8 @@ List<GetPage<dynamic>> pages() => [
           page: () => const ShortPackagesDetails(
                 packageId: '',
               )),
-      GetPage(
-          name: Routes.packagesdetails, page: () => const PackagesDetails()), //
+      // GetPage(
+      //     name: Routes.packagesdetails, page: () => const PackagesDetails()), //
       GetPage(
           name: Routes.preBookingPackageDetails, page: () => const BookNow()),
       GetPage(name: Routes.contactus, page: () => const ContactUs()),

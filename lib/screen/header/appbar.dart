@@ -100,8 +100,27 @@ class _PoorvaAppBarState extends State<PoorvaAppBar> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    buildLogin(),
-                    buildRegister(),
+                    GestureDetectorText(
+                      fontSize: 16,
+                      value: "Login",
+                      textColor: widget.textColor ?? Colors.white,
+                      onPressed: () {
+                        Beamer.of(context).beamToNamed(
+                          '${Routes.authentication}?type=Login',
+                        );
+                      },
+                      herf: '${Routes.authentication}?type=Login',
+                    ),
+                    GestureDetectorText(
+                      fontSize: 16,
+                      value: "Register",
+                      textColor: widget.textColor ?? Colors.white,
+                      onPressed: () {
+                        Beamer.of(context).beamToNamed(
+                            '${Routes.authentication}?type=Register');
+                      },
+                      herf: '${Routes.authentication}?type=Register',
+                    ),
                   ],
                 ),
         ),

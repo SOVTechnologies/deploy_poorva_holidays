@@ -21,14 +21,13 @@ import 'package:poorvaholiday/screen/widgets/custom_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ContactUsFrom extends StatelessWidget {
-
   var getXController = Get.put(ContactUsController());
 
   ContactUsFrom({Key? key}) : super(key: key);
   TextStyle newMethod() {
     return GoogleFonts.poppins(
         fontSize: 12,
-        color: ColorConstant.whiteColor,
+        color: ColorConstant.blueColor,
         fontWeight: FontWeight.normal,
         letterSpacing: 1,
         wordSpacing: 1);
@@ -46,7 +45,7 @@ class ContactUsFrom extends StatelessWidget {
               fontSize: 14,
               fontWeight: FontWeight.normal,
               value: 'Name',
-              customColor: ColorConstant.whiteColor),
+              customColor: ColorConstant.blueColor),
           TextField(
             controller: getXController.name,
             keyboardType: TextInputType.text,
@@ -54,14 +53,14 @@ class ContactUsFrom extends StatelessWidget {
             decoration: InputDecoration(
               prefixIcon: Icon(
                 Icons.person,
-                color: ColorConstant.whiteColor,
+                color: ColorConstant.blueColor,
               ),
               hintStyle: newMethod(),
               hintText: "Enter Full Name",
               labelStyle: newMethod(),
               enabledBorder: OutlineInputBorder(
                 borderSide:
-                    BorderSide(color: ColorConstant.whiteColor, width: 0.0),
+                    BorderSide(color: ColorConstant.blueColor, width: 0.0),
               ),
               border: const OutlineInputBorder(),
             ),
@@ -73,7 +72,7 @@ class ContactUsFrom extends StatelessWidget {
               fontSize: 14,
               fontWeight: FontWeight.normal,
               value: 'Email ID',
-              customColor: ColorConstant.whiteColor),
+              customColor: ColorConstant.blueColor),
           TextField(
             controller: getXController.emailId,
             keyboardType: TextInputType.emailAddress,
@@ -81,14 +80,14 @@ class ContactUsFrom extends StatelessWidget {
             decoration: InputDecoration(
               prefixIcon: Icon(
                 Icons.email,
-                color: ColorConstant.whiteColor,
+                color: ColorConstant.blueColor,
               ),
               hintStyle: newMethod(),
               hintText: "Enter Email ID",
               labelStyle: newMethod(),
               enabledBorder: OutlineInputBorder(
                 borderSide:
-                    BorderSide(color: ColorConstant.whiteColor, width: 0.0),
+                    BorderSide(color: ColorConstant.blueColor, width: 0.0),
               ),
               border: const OutlineInputBorder(),
             ),
@@ -100,7 +99,7 @@ class ContactUsFrom extends StatelessWidget {
               fontSize: 14,
               fontWeight: FontWeight.normal,
               value: 'Mobile Number',
-              customColor: ColorConstant.whiteColor),
+              customColor: ColorConstant.blueColor),
           TextField(
             controller: getXController.mobileNumber,
             keyboardType: TextInputType.number,
@@ -108,14 +107,14 @@ class ContactUsFrom extends StatelessWidget {
             decoration: InputDecoration(
               prefixIcon: Icon(
                 Icons.phone,
-                color: ColorConstant.whiteColor,
+                color: ColorConstant.blueColor,
               ),
               hintStyle: newMethod(),
               hintText: "Enter Mobile Number",
               labelStyle: newMethod(),
               enabledBorder: OutlineInputBorder(
                 borderSide:
-                    BorderSide(color: ColorConstant.whiteColor, width: 0.0),
+                    BorderSide(color: ColorConstant.blueColor, width: 0.0),
               ),
               border: const OutlineInputBorder(),
             ),
@@ -127,7 +126,7 @@ class ContactUsFrom extends StatelessWidget {
               fontSize: 14,
               fontWeight: FontWeight.normal,
               value: 'Enter Location',
-              customColor: ColorConstant.whiteColor),
+              customColor: ColorConstant.blueColor),
           GetX<CounrtyController>(
               init: CounrtyController(),
               builder: (controller) {
@@ -135,7 +134,7 @@ class ContactUsFrom extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 5),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(5)),
-                      border: Border.all(color: ColorConstant.whiteColor)),
+                      border: Border.all(color: ColorConstant.blueColor)),
                   child: DropdownButtonFormField<String>(
                     dropdownColor: ColorConstant.blueColor,
                     value: controller.countryList[0],
@@ -144,7 +143,7 @@ class ContactUsFrom extends StatelessWidget {
                     ),
                     isDense: true,
                     style: newMethod(),
-                    focusColor: ColorConstant.whiteColor,
+                    focusColor: ColorConstant.blueColor,
                     icon: const Icon(Icons.arrow_drop_down),
                     onChanged: (data) {
                       getXController.location.text = data.toString();
@@ -157,13 +156,12 @@ class ContactUsFrom extends StatelessWidget {
                             fontSize: 12,
                             fontWeight: FontWeight.normal,
                             value: value,
-                            customColor: ColorConstant.whiteColor),
+                            customColor: ColorConstant.blueColor),
                       );
                     }).toList(),
                   ),
                 );
               }),
-
           const SizedBox(
             height: 20,
           ),
@@ -171,7 +169,7 @@ class ContactUsFrom extends StatelessWidget {
               fontSize: 14,
               fontWeight: FontWeight.normal,
               value: 'Enter Message',
-              customColor: ColorConstant.whiteColor),
+              customColor: ColorConstant.blueColor),
           TextField(
             controller: getXController.message,
             keyboardType: TextInputType.text,
@@ -179,14 +177,14 @@ class ContactUsFrom extends StatelessWidget {
             decoration: InputDecoration(
               prefixIcon: Icon(
                 Icons.messenger_sharp,
-                color: ColorConstant.whiteColor,
+                color: ColorConstant.blueColor,
               ),
               hintStyle: newMethod(),
               labelStyle: newMethod(),
               hintText: "Enter Message",
               enabledBorder: OutlineInputBorder(
                 borderSide:
-                    BorderSide(color: ColorConstant.whiteColor, width: 0.0),
+                    BorderSide(color: ColorConstant.blueColor, width: 0.0),
               ),
               border: const OutlineInputBorder(),
             ),
