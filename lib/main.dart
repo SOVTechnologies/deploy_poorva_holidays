@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
         ),
         routeInformationParser: BeamerParser(),
         routerDelegate: BeamerDelegate(
+          routeListener: (RouteInformation p0, BeamerDelegate p1) => {},
           locationBuilder: routeLocations(context),
           navigatorObservers: [seoRouteObserver],
         ),

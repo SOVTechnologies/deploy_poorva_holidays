@@ -15,7 +15,7 @@ import 'package:poorvaholiday/screen/widgets/text_with_Icon.dart';
 import 'package:poorvaholiday/screen/widgets/custom_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../packageDetails.dart';
+import '../widgets/packageDetails/packageDetails.dart';
 
 class ShortPackageContent extends StatelessWidget {
   final PackageDetailsResponse packagesDetails;

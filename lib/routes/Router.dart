@@ -8,7 +8,7 @@ import 'package:poorvaholiday/screen/book_now/book_now_copy.dart';
 import 'package:poorvaholiday/screen/cancellationPolicies.dart';
 import 'package:poorvaholiday/screen/contactus/contactus.dart';
 import 'package:poorvaholiday/screen/HomeScreen/homesection.dart';
-import 'package:poorvaholiday/screen/packageDetails.dart';
+import 'package:poorvaholiday/screen/widgets/packageDetails/packageDetails.dart';
 import 'package:poorvaholiday/screen/policies.dart';
 import 'package:poorvaholiday/screen/search/search.dart';
 import 'package:poorvaholiday/screen/short_package_details/short_packages_details.dart';

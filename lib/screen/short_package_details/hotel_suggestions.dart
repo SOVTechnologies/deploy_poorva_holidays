@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:poorvaholiday/constant/color_constant.dart';
 import 'package:poorvaholiday/constant/constant_size.dart';
 import 'package:poorvaholiday/routes/routes.dart';
-import 'package:poorvaholiday/screen/packageDetails.dart';
+import 'package:poorvaholiday/screen/widgets/packageDetails/packageDetails.dart';
 import 'package:poorvaholiday/screen/widgets/container_radius_boxdecorations.dart';
 import 'package:poorvaholiday/screen/widgets/imagedecoration.dart';
 import 'package:poorvaholiday/screen/widgets/price_design.dart';

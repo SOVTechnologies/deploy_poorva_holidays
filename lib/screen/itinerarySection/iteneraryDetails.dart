@@ -8,12 +8,14 @@ import 'itenerary.dart';
 
 class IteneraryDetails extends StatelessWidget {
   late List<DayActivityResponse> dayActivityResponse;
-  IteneraryDetails({Key? key, required this.dayActivityResponse}) : super(key: key);
+  IteneraryDetails({Key? key, required this.dayActivityResponse})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(ConstantSize().iteneraryContentMargin(context)),
+      width: double.infinity,
+      alignment: Alignment.center,
       child: ListView.builder(
         physics: const ClampingScrollPhysics(),
         shrinkWrap: true,
@@ -24,17 +26,18 @@ class IteneraryDetails extends StatelessWidget {
             note: dayActivityResponse[index].note,
             day: '${dayActivityResponse[index].day}',
             title: dayActivityResponse[index].title,
+            // desc: Text('')
             desc: ListView.builder(
               itemCount: dayActivityResponse[index].plan.length,
-              itemBuilder:(BuildContext context, int innerIndex){
+              itemBuilder: (BuildContext context, int innerIndex) {
                 return TextView(
                     fontSize: 13,
                     fontWeight: FontWeight.normal,
-                    value: '${dayActivityResponse[index].plan[innerIndex].startTime}-${dayActivityResponse[index].plan[innerIndex].endTime} : ${dayActivityResponse[index].plan[innerIndex].description}',
+                    value:
+                        '${dayActivityResponse[index].plan[innerIndex].startTime}${dayActivityResponse[index].plan[innerIndex].endTime}${dayActivityResponse[index].plan[innerIndex].description}',
                     customColor: ColorConstant.blackColor);
-              } ,
-            )
-        ),
+              },
+            )),
       ),
     );
   }
