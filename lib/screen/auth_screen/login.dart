@@ -1,5 +1,7 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:poorvaholiday/constant/color_constant.dart';
 import 'package:poorvaholiday/controller/auth_controller.dart';
 import 'package:poorvaholiday/screen/widgets/gesturedectector_text.dart';
@@ -10,7 +12,11 @@ import '../widgets/container_button.dart';
 import '../widgets/custom_text.dart';
 
 class Login extends StatelessWidget {
-  Login({Key? key}) : super(key: key);
+  final String? lastLocation;
+  Login({
+    Key? key,
+    this.lastLocation,
+  }) : super(key: key);
 
   TextEditingController forgotEmail = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -96,7 +102,9 @@ class Login extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 5,),
+          SizedBox(
+            height: 5,
+          ),
           GestureDetector(
               onTap: () {
                 Get.defaultDialog(
@@ -151,9 +159,10 @@ class Login extends StatelessWidget {
                 ? ContainerButton(
                     onTap: () {
                       AuthController.authInstance.login(
-                        emailController.text.trim(),
-                        passwordController.text.trim(),
-                      );
+                          emailController.text.trim(),
+                          passwordController.text.trim(),
+                          context,
+                          lastLocation: lastLocation);
                     },
                     title: "Login",
                     backGroundColor: ColorConstant.blueColor)

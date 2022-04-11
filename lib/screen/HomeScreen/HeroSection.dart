@@ -48,8 +48,8 @@ class _HerosectionState extends State<Herosection> {
           color: ColorConstant.blueColor,
           alignment: Alignment.topLeft,
           child: PoorvaAppBar(
-            padding:
-                EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
+            padding: EdgeInsets.only(
+                left: MediaQuery.of(context).size.width * 0.1, right: 20),
           ),
         ),
         Container(

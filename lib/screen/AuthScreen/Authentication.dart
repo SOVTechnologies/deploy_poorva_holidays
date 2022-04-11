@@ -1,6 +1,7 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
+
 import 'package:poorvaholiday/helpers/Seo/renderers/text_renderer/text_renderer_style.dart';
 import 'package:poorvaholiday/routes/routes.dart';
 import 'package:poorvaholiday/screen/auth_screen/login.dart';
@@ -9,9 +10,11 @@ import 'package:poorvaholiday/screen/widgets/custom_text.dart';
 
 class Authentication extends StatelessWidget {
   final String type;
+  final String? lastLocation;
   const Authentication({
     Key? key,
     required this.type,
+    this.lastLocation,
   }) : super(key: key);
 
   @override
@@ -145,11 +148,17 @@ class Authentication extends StatelessWidget {
   Widget getByType(String type) {
     switch (type.toLowerCase()) {
       case 'login':
-        return Login();
+        return Login(
+          lastLocation: lastLocation,
+        );
       case 'register':
-        return RegisterScreen();
+        return RegisterScreen(
+          lastLocation: lastLocation,
+        );
       default:
-        return RegisterScreen();
+        return RegisterScreen(
+          lastLocation: lastLocation,
+        );
     }
   }
 }

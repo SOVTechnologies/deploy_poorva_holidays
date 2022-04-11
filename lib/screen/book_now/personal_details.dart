@@ -49,16 +49,16 @@ class _PersonalDetailsState extends State<PersonalDetails> {
     // TODO: implement initState
     super.initState();
 
-   setState(() {
-     if(auth.currentUser.isNull){
-       emailID.text = '';
-       bookingController.bookingPersonalDetails.personalEmail = '';
-     }else{
-       emailID.text = authController.firebaseUser.value!.email!;
-       bookingController.bookingPersonalDetails.personalEmail = authController.firebaseUser.value!.email!;
-     }
-   });
-
+    setState(() {
+      if (auth.currentUser.isNull) {
+        emailID.text = '';
+        bookingController.bookingPersonalDetails.personalEmail = '';
+      } else {
+        emailID.text = authController.firebaseUser.value!.email!;
+        bookingController.bookingPersonalDetails.personalEmail =
+            authController.firebaseUser.value!.email!;
+      }
+    });
   }
 
   @override
@@ -68,8 +68,11 @@ class _PersonalDetailsState extends State<PersonalDetails> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         TextView(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
+            style: TextView.headerStyle(
+              size: 20,
+              weight: FontWeight.bold,
+              color: ColorConstant.blueColor,
+            ),
             value: "Personal Details",
             customColor: ColorConstant.blackColor),
         TextView(
@@ -278,7 +281,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
             ),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Column(

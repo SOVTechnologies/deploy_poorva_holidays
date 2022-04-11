@@ -1,53 +1,52 @@
-<!DOCTYPE html><html>
-<meta name="viewport" content="width=device-width">
-<head><title>RazorPay Web Payment</title></head>
-<body>
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script>
+<!DOCTYPE html>
+<html>
+  <meta name="viewport" content="width=device-width" />
+  <head>
+    <title>RazorPay Web Payment</title>
+  </head>
 
-       const querySearchParma  = window.location.search;
-       console.log(querySearchParma);
-       const parma  = new URLSearchParams(querySearchParma);
-       console.log("========================");
-       console.log(parma.get('amount'));
-
-       var options = {
-         "key": "rzp_live_dBCKDWL4OU7DPm",
-          "amount": parma.get('amount') * 100, "currency": "INR",
-          "name": "Poorva Holiday",
-          "description": "Package Transaction",
-          "image": "/web/favicon.png",
-          "order_id": parma.get('orderId'),
-          "handler": function (response){
-            window.parent.postMessage("SUCCESS","*");
-            // alert(response.razorpay_payment_id);
-            // alert(response.razorpay_order_id);
-            // alert(response.razorpay_signature)
+  <body>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+      const querySearchParma = window.location.search;
+      console.log(querySearchParma);
+      const parma = new URLSearchParams(querySearchParma);
+      var options = {
+        key: "rzp_live_dBCKDWL4OU7DPm",
+        amount: parma.get("amount") * 100,
+        currency: "INR",
+        name: "Poorva Holiday",
+        description: "Package Transaction",
+        image: "/web/favicon.png",
+        order_id: parma.get("orderId"),
+        handler: function (response) {
+          console.log(response);
+          window.parent.postMessage("SUCCESS", "*");
+        },
+        prefill: {
+          name: parma.get("name"),
+          email: parma.get("email"),
+          contact: parma.get("mobile"),
+        },
+        notes: {
+          address: "Autofy",
+        },
+        theme: {
+          color: "#2e3b59",
+        },
+        modal: {
+          ondismiss: function () {
+            window.parent.postMessage("MODAL_CLOSED", "*"); //3
           },
-          "prefill": {
-             "name": parma.get('name'),
-             "email": parma.get('email'),
-             "contact": parma.get('mobile')
-           },
-           "notes": {
-             "address": "Autofy"
-          },
-          "theme": {
-             "color": "#2e3b59"
-          },
-          "modal": {
-            "ondismiss": function(){
-               window.parent.postMessage("MODAL_CLOSED","*");   //3
-            }
-          }
-       };
+        },
+      };
 
-       var rzp1 = new Razorpay(options);
-       window.onload = function(e){  //1
-          rzp1.open();
-          e.preventDefault();
-       }
-
-     </script>
-</body>
+      var rzp1 = new Razorpay(options);
+      window.onload = function (e) {
+        //1
+        rzp1.open();
+        e.preventDefault();
+      };
+    </script>
+  </body>
 </html>

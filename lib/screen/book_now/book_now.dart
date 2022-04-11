@@ -1,73 +1,96 @@
 import 'dart:html';
+import 'dart:ui' as ui;
 
+import 'package:beamer/beamer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 import 'package:poorvaholiday/constant/color_constant.dart';
 import 'package:poorvaholiday/constant/constant_size.dart';
 import 'package:poorvaholiday/controller/auth_controller.dart';
 import 'package:poorvaholiday/controller/booking_controller.dart';
 import 'package:poorvaholiday/controller/cost_controller.dart';
+import 'package:poorvaholiday/routes/routes.dart';
 import 'package:poorvaholiday/screen/header/appbar.dart';
-import 'package:poorvaholiday/screen/widgets/container_button.dart';
 import 'package:poorvaholiday/screen/widgets/Loader/custom_loader.dart';
+import 'package:poorvaholiday/screen/widgets/container_button.dart';
 import 'package:poorvaholiday/screen/widgets/custom_text.dart';
 import 'package:poorvaholiday/utils/responsive.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import 'add_travel.dart';
-import 'personal_details.dart';
 import 'child_details.dart';
 import 'extraBed.dart';
-import 'dart:ui' as ui;
+import 'personal_details.dart';
 
 class BookNow extends StatefulWidget {
-  const BookNow({Key? key}) : super(key: key);
+  final String packageID;
+  final String costId;
+  final String? redirectLocation;
+  const BookNow({
+    Key? key,
+    required this.packageID,
+    required this.costId,
+    this.redirectLocation,
+  }) : super(key: key);
 
   @override
   _BookNowState createState() => _BookNowState();
 }
 
 class _BookNowState extends State<BookNow> {
-  dynamic argument = Get.arguments;
   BookingController bookingController = Get.put(BookingController());
+  AuthController registerController = Get.put(AuthController());
+  @override
+  void initState() {
+    super.initState();
+    Get.lazyPut(() => AuthController());
+  }
 
   @override
   Widget build(BuildContext context) {
+    print('redirect to: ${widget.redirectLocation}');
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size(MediaQuery.of(context).size.width, 150),
-        child: const PoorvaAppBar(),
+        child: PoorvaAppBar(
+          backgroundColor: ColorConstant.blueColor,
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+        ),
       ),
       body: GetX<CostController>(
-        init: CostController(costID: argument[1]),
+        init: CostController(costID: widget.costId),
         builder: (singlePackage) {
           return singlePackage.dataAvailable == true
-              ? Reponsivenes.isLargeScreen(context)
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                            flex: 3,
-                            child: SingleChildScrollView(
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                        flex: 3,
+                        child: registerController.dataAvailable &&
+                                !registerController.isdataGeetingFetch
+                            ? SingleChildScrollView(
                                 child: buildPersonalExpanded(
-                                    context, singlePackage))),
-                        Expanded(child: buildPriceExpanded(singlePackage)),
-                      ],
-                    )
-                  : SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                              height: 180,
-                              child: buildPriceExpanded(singlePackage)),
-                          buildPersonalExpanded(context, singlePackage),
-                        ],
-                      ),
-                    )
+                                    context, singlePackage))
+                            : const Center(child: CustomLoader())),
+                    Expanded(child: buildPriceExpanded(singlePackage)),
+                  ],
+                )
+              // : SingleChildScrollView(
+              //     child: Column(
+              //       mainAxisAlignment: MainAxisAlignment.start,
+              //       crossAxisAlignment: CrossAxisAlignment.start,
+              //       children: [
+              //         SizedBox(
+              //             height: 180,
+              //             child: buildPriceExpanded(singlePackage)),
+              //         buildPersonalExpanded(context, singlePackage),
+              //       ],
+              //     ),
+              //   )
               : Container();
         },
       ),
@@ -189,9 +212,6 @@ class _BookNowState extends State<BookNow> {
         children: [
           Expanded(
             child: ListView.builder(
-              scrollDirection: Reponsivenes.isLargeScreen(context)
-                  ? Axis.vertical
-                  : Axis.horizontal,
               itemCount: singlePackage
                   .customCost.length, //controller.priceList.length,
               itemBuilder: (BuildContext context, int index) {
@@ -243,7 +263,7 @@ class _BookNowState extends State<BookNow> {
               },
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           bookingController.isPaymentGatewayCalled == false
@@ -256,15 +276,19 @@ class _BookNowState extends State<BookNow> {
                                 (singlePackage.totalPrice * 0.18))
                             .toStringAsFixed(2));
                       });
-                      bookingController.getBookingID(finalPrice, argument[0],
-                          user, singlePackage.customCost);
+                      bookingController.getBookingID(
+                          finalPrice,
+                          widget.packageID,
+                          user,
+                          singlePackage.customCost,
+                          context);
                     } else {
-                      Get.snackbar("Error", 'Please Login or register',
-                          maxWidth: 500,
-                          backgroundColor: ColorConstant.blueColor,
-                          colorText: ColorConstant.whiteColor,
-                          margin: const EdgeInsets.all(20),
-                          snackPosition: SnackPosition.BOTTOM);
+                      BeamState beamState = Beamer.of(context)
+                          .currentBeamLocation
+                          .state as BeamState;
+                      Beamer.of(context).beamToNamed(
+                          '${Routes.authentication}?type=Login',
+                          data: beamState.uri.toString());
                     }
                   },
                   title: singlePackage.totalPrice == 0

@@ -4,7 +4,8 @@ import 'package:get/get.dart';
 import 'package:poorvaholiday/routes/routes.dart';
 import 'package:poorvaholiday/screen/AuthScreen/Authentication.dart';
 import 'package:poorvaholiday/screen/aboutUs/about_us.dart';
-import 'package:poorvaholiday/screen/book_now/book_now_copy.dart';
+import 'package:poorvaholiday/screen/book_now/book_now.dart';
+
 import 'package:poorvaholiday/screen/cancellationPolicies.dart';
 import 'package:poorvaholiday/screen/contactus/contactus.dart';
 import 'package:poorvaholiday/screen/HomeScreen/homesection.dart';
@@ -17,27 +18,36 @@ import 'package:poorvaholiday/utils/WebPayment.dart';
 
 RoutesLocationBuilder routeLocations(BuildContext context) =>
     RoutesLocationBuilder(routes: {
-      Routes.home: (BuildContext context, BeamState state, data) =>
-          const BeamPage(
+      Routes.home: (BuildContext context, BeamState state, data) => BeamPage(
+            key: const ValueKey('home'),
             title: 'Welcome to Poorva holidays',
-            child: HomeSection(),
+            child: HomeSection(
+              key: GlobalKey<BeamerState>(),
+            ),
           ),
       Routes.shortpackagesdetails:
           (BuildContext context, BeamState state, data) {
         final String? packageId = state.queryParameters['id'];
         final String? title = state.queryParameters['title'];
         return BeamPage(
+          key: ValueKey('short-$packageId'),
           title: '$title - Poorva holidays',
           child: ShortPackagesDetails(
+            key: GlobalKey<BeamerState>(),
             packageId: packageId!,
           ), // ShortPackagesDetails(),
         );
       },
       Routes.authentication: (BuildContext context, BeamState state, data) {
         final String? type = state.queryParameters['type'];
+        final lastUrl = data;
+        final String? lastLocation = lastUrl?.toString();
         return BeamPage(
+          key: ValueKey('auth-$type'),
           title: '$type - Poorva holidays',
           child: Authentication(
+            lastLocation: lastLocation,
+            key: GlobalKey<BeamerState>(),
             type: type!,
           ),
         );
@@ -45,20 +55,40 @@ RoutesLocationBuilder routeLocations(BuildContext context) =>
       Routes.packagesdetails: (BuildContext context, BeamState state, data) {
         final String? packageId = state.queryParameters['id'];
         final String? title = state.queryParameters['title'];
+
         return BeamPage(
-          title: '$title - Poorva holidays',
+          key: ValueKey('package-$packageId'),
+          title: '$title - Package Details - Poorva holidays',
           child: PackagesDetails(
+            key: GlobalKey<BeamerState>(),
             packageId: packageId!,
-            // packageId: packageId!,
           ),
         );
       },
       Routes.preBookingPackageDetails:
-          (BuildContext context, BeamState state, data) => const BookNow(),
+          (BuildContext context, BeamState state, data) {
+        final String? packageId = state.queryParameters['id'];
+        final String? costId = state.queryParameters['costId'];
+        final String? title = state.queryParameters['title'];
+        final lastUrl = data;
+        final String? redirectLocation = lastUrl?.toString();
+        return BeamPage(
+          key: ValueKey('preBookingPackageDetails=$packageId=$costId'),
+          title: 'Pre Booking Package Details - $title - Poorva holidays',
+          child: BookNow(
+            key: GlobalKey<BeamerState>(),
+            packageID: packageId!,
+            costId: costId!,
+            redirectLocation: redirectLocation,
+          ),
+        );
+      },
       Routes.contactus: (BuildContext context, BeamState state, data) {
-        return const BeamPage(
+        return BeamPage(
           title: 'Contact Us - Poorva holidays',
-          child: ContactUs(),
+          child: ContactUs(
+            key: GlobalKey<BeamerState>(),
+          ),
         );
       },
       Routes.searchPage: (BuildContext context, BeamState state, data) =>
@@ -85,7 +115,11 @@ List<GetPage<dynamic>> pages() => [
       // GetPage(
       //     name: Routes.packagesdetails, page: () => const PackagesDetails()), //
       GetPage(
-          name: Routes.preBookingPackageDetails, page: () => const BookNow()),
+          name: Routes.preBookingPackageDetails,
+          page: () => const BookNow(
+                packageID: '',
+                costId: '',
+              )),
       GetPage(name: Routes.contactus, page: () => const ContactUs()),
       GetPage(name: Routes.aboutus, page: () => const AboutUs()),
       GetPage(name: Routes.searchPage, page: () => Search()),

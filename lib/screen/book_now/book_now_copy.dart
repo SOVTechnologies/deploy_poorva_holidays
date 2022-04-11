@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:poorvaholiday/constant/color_constant.dart';
 import 'package:poorvaholiday/controller/price_list_controller.dart';
 import 'package:poorvaholiday/controller/single_package_info.dart';
+import 'package:poorvaholiday/payment/payment.dart';
 import 'package:poorvaholiday/screen/header/appbar.dart';
 import 'package:poorvaholiday/screen/widgets/custom_text.dart';
 
 import 'add_travel.dart';
-import 'personal_details.dart';
 import 'child_details.dart';
 import 'extraBed.dart';
+import 'personal_details.dart';
 
 class BookNow extends StatefulWidget {
-  const BookNow({Key? key}) : super(key: key);
+  final String packageID;
+  const BookNow({
+    Key? key,
+    required this.packageID,
+  }) : super(key: key);
 
   @override
   _BookNowState createState() => _BookNowState();
@@ -20,7 +26,7 @@ class BookNow extends StatefulWidget {
 
 class _BookNowState extends State<BookNow> {
   final priceController = Get.put(PriceController());
-  var packageID  = Get.arguments;
+  // var packageID = Get.arguments;
 
   List<Widget> addTravler = [];
   int selectedAmountPosition = 0;
@@ -30,7 +36,10 @@ class _BookNowState extends State<BookNow> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size(MediaQuery.of(context).size.width, 150),
-        child: const PoorvaAppBar(),
+        child: PoorvaAppBar(
+          backgroundColor: ColorConstant.blueColor,
+          padding: EdgeInsets.symmetric(horizontal: 20),
+        ),
       ),
       body: Row(
         children: [
@@ -47,8 +56,11 @@ class _BookNowState extends State<BookNow> {
                   height: 20,
                 ),
                 TextView(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                    style: TextView.headerStyle(
+                      size: 20,
+                      weight: FontWeight.bold,
+                      color: ColorConstant.blueColor,
+                    ),
                     value: "Travel Details",
                     customColor: ColorConstant.blackColor),
                 const SizedBox(
@@ -114,9 +126,6 @@ class _BookNowState extends State<BookNow> {
               ],
             ),
           ),
-
-
-
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.25,
             child: Align(
@@ -125,62 +134,105 @@ class _BookNowState extends State<BookNow> {
                 margin: const EdgeInsets.only(top: 50, right: 50),
                 width: MediaQuery.of(context).size.width * 0.20,
                 child: GetX<SinglePackgeInfo>(
-                  init: SinglePackgeInfo(packageid:packageID),
-                  builder: (singlePackage) {
-                    return singlePackage.dataAvailable == true ?
-                             ListView.builder(
-                      itemCount: singlePackage.customCost.length, //controller.priceList.length,
-                      itemBuilder: (BuildContext context, int index) {
-
-                        return Card(
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
+                    init: SinglePackgeInfo(packageid: widget.packageID),
+                    builder: (SinglePackgeInfo singlePackage) {
+                      print(singlePackage.costResponse);
+                      return singlePackage.dataAvailable == true
+                          ? Column(
                               children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    GetBuilder<PriceController>(
-                                        init: PriceController(),
-                                        builder: (priceController) {
-                                          return Checkbox(
-                                              value: true,
-                                              onChanged: (value) {
-                                                priceController.setSelcetion(
-                                                    int.parse(value.toString()));
-                                              },);
-                                        }),
-                                    TextView(
-                                      customColor: ColorConstant.blueColor,
-                                      value: '${singlePackage.customCost[index].costResponse.price}',
+                                Expanded(
+                                    child: ListView.builder(
+                                  itemCount: singlePackage.customCost
+                                      .length, //controller.priceList.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Card(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                GetBuilder<PriceController>(
+                                                    init: PriceController(),
+                                                    builder: (priceController) {
+                                                      return Checkbox(
+                                                        value: true,
+                                                        onChanged: (value) {
+                                                          priceController
+                                                              .setSelcetion(int
+                                                                  .parse(value
+                                                                      .toString()));
+                                                        },
+                                                      );
+                                                    }),
+                                                TextView(
+                                                  customColor:
+                                                      ColorConstant.blueColor,
+                                                  value:
+                                                      '${singlePackage.customCost[index].costResponse.price}',
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                                TextView(
+                                                  customColor:
+                                                      ColorConstant.orangeColor,
+                                                  value: "Per Person",
+                                                  fontSize: 8,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                              ],
+                                            ),
+                                            TextView(
+                                              customColor:
+                                                  ColorConstant.blackColor,
+                                              value: singlePackage
+                                                  .customCost[index]
+                                                  .costResponse
+                                                  .description,
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                )),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 100),
+                                  child: TextButton(
+                                    onPressed: () {
+                                      // Navigator.of(context).push(
+                                      //     MaterialPageRoute(
+                                      //         builder: (context) =>
+                                      //             const Webpayment(
+                                      //               amount: 1,
+                                      //               orderId: '',
+                                      //             )));
+                                    },
+                                    child: TextView(
+                                      value: "Book Now",
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
+                                      customColor: ColorConstant.blueColor,
                                     ),
-                                    TextView(
-                                      customColor: ColorConstant.orangeColor,
-                                      value: "Per Person",
-                                      fontSize: 8,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ],
-                                ),
-                                TextView(
-                                  customColor: ColorConstant.blackColor,
-                                  value: singlePackage.customCost[index].costResponse.description,
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.normal,
+                                  ),
                                 ),
                               ],
-                            ),
-                          ),
-                        );
-                      },
-                    ):Center(child: CircularProgressIndicator(),);
-                  }
-                ),
+                            )
+                          : const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                    }),
               ),
             ),
           ),

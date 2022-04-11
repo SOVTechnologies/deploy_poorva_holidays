@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:poorvaholiday/constant/color_constant.dart';
 import 'package:poorvaholiday/controller/auth_controller.dart';
 import 'package:poorvaholiday/screen/widgets/poorva_logo.dart';
@@ -9,7 +10,11 @@ import '../widgets/container_button.dart';
 import '../widgets/custom_text.dart';
 
 class RegisterScreen extends StatelessWidget {
-  RegisterScreen({Key? key}) : super(key: key);
+  final String? lastLocation;
+  RegisterScreen({
+    Key? key,
+    this.lastLocation,
+  }) : super(key: key);
 
   TextEditingController name = TextEditingController();
   TextEditingController password = TextEditingController();
@@ -156,8 +161,12 @@ class RegisterScreen extends StatelessWidget {
             () => registerController.isdataGeetingFetch == false
                 ? ContainerButton(
                     onTap: () {
-                      AuthController.authInstance
-                          .register(name.text.trim(), password.text.trim(),confrimPassword.text.trim());
+                      AuthController.authInstance.register(
+                          name.text.trim(),
+                          password.text.trim(),
+                          confrimPassword.text.trim(),
+                          context,
+                          lastLocation: lastLocation);
                     },
                     title: "Register",
                     backGroundColor: ColorConstant.blueColor)

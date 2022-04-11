@@ -61,6 +61,7 @@ dependencies:
   beamer: ^1.4.0+1
   lottie: ^1.2.2
   cached_network_image: ^3.2.0
+  fluttertoast: ^8.0.9
 
 dev_dependencies:
   flutter_test:
@@ -86,6 +87,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/html/
     - ft-logo.png
     - egypt.jpeg
 #    - dashboard_image.jpeg

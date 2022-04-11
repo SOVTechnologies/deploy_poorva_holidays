@@ -105,8 +105,15 @@ class _PoorvaAppBarState extends State<PoorvaAppBar> {
                       value: "Login",
                       textColor: widget.textColor ?? Colors.white,
                       onPressed: () {
+                        BeamState beamState = Beamer.of(context)
+                            .currentBeamLocation
+                            .state as BeamState;
+                        // print(beamState.uri.toString());
+                        final lastLocation = beamState.uriBlueprint;
+                        print(lastLocation.toString());
                         Beamer.of(context).beamToNamed(
                           '${Routes.authentication}?type=Login',
+                          data: lastLocation,
                         );
                       },
                       herf: '${Routes.authentication}?type=Login',
@@ -131,11 +138,13 @@ class _PoorvaAppBarState extends State<PoorvaAppBar> {
   GestureDetector buildPostLoign() {
     return GestureDetector(
       onTap: () {
-        Get.defaultDialog(
-            content: LoggedIN(),
-            radius: 0.0,
-            title: "",
-            contentPadding: EdgeInsets.zero);
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                content: LoggedIN(),
+              );
+            });
       },
       child: CircleAvatar(
         backgroundColor: ColorConstant.orangeColor,

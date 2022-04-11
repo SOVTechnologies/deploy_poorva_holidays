@@ -3,9 +3,12 @@
         "aboutus",
         "autoplay",
         "Beamer",
+        "Confrim",
         "contactus",
+        "Geeting",
         "herf",
         "Herosection",
+        "isdata",
         "packagesdetails",
         "Packge",
         "Poorva",
@@ -13,6 +16,7 @@
         "shortpackagesdetails",
         "Showlogo",
         "Swiper",
-        "termsand"
+        "termsand",
+        "Webpayment"
     ]
 }

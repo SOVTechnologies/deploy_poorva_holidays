@@ -2,16 +2,9 @@ import 'package:beamer/beamer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:get/get.dart';
 import 'package:poorvaholiday/constant/color_constant.dart';
-import 'package:poorvaholiday/constant/constant_size.dart';
 import 'package:poorvaholiday/routes/routes.dart';
-import 'package:poorvaholiday/screen/widgets/packageDetails/packageDetails.dart';
-import 'package:poorvaholiday/screen/widgets/container_radius_boxdecorations.dart';
-import 'package:poorvaholiday/screen/widgets/imagedecoration.dart';
-import 'package:poorvaholiday/screen/widgets/price_design.dart';
 import 'package:poorvaholiday/screen/widgets/custom_text.dart';
-import 'package:poorvaholiday/utils/responsive.dart';
 
 class HotelSuggestions extends StatefulWidget {
   String imageName;

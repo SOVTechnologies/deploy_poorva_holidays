@@ -1,24 +1,19 @@
-import 'dart:html' as html;
-
+import 'package:beamer/beamer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:get/get.dart';
 import 'package:poorvaholiday/screen/widgets/Loader/AnimatedLoader.dart';
+import 'package:poorvaholiday/screen/widgets/imagedecoration.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import 'package:poorvaholiday/constant/color_constant.dart';
-import 'package:poorvaholiday/constant/constant_size.dart';
 import 'package:poorvaholiday/controller/download_broucher.dart';
-import 'package:poorvaholiday/controller/package_controller.dart';
 import 'package:poorvaholiday/controller/single_package_info.dart';
 import 'package:poorvaholiday/models/package_details.dart';
 import 'package:poorvaholiday/remote_services/api.dart';
 import 'package:poorvaholiday/routes/routes.dart';
-import 'package:poorvaholiday/utils/responsive.dart';
-
-import '../../footer/footer.dart';
 import '../../header/appbar.dart';
 import '../../itinerarySection/cancellation_policy.dart';
 import '../../itinerarySection/costing_details.dart';
@@ -28,7 +23,6 @@ import '../../itinerarySection/iteneraryDetails.dart';
 import '../container_button.dart';
 import '../custom_divider.dart';
 import '../custom_text.dart';
-import '../imagedecoration.dart';
 import '../text_with_Icon.dart';
 
 class PackagesDetails extends StatefulWidget {
@@ -147,6 +141,7 @@ class _PackagesDetailsState extends State<PackagesDetails> {
                         width: MediaQuery.of(context).size.width,
                         child: Swiper(
                           loop: false,
+                          autoplay: true,
                           viewportFraction: 0.2,
                           itemCount: controller
                               .packageDetailsResponse.packageGalleryLink.length,
@@ -391,132 +386,136 @@ class _PackagesDetailsState extends State<PackagesDetails> {
   SizedBox tourDetails(
       BuildContext context, PackageDetailsResponse packageDetailsResponse) {
     return SizedBox(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          TextView(
-            style: TextView.headerStyle(
-              size: 30,
-              weight: FontWeight.bold,
-              color: ColorConstant.blueColor,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            TextView(
+              style: TextView.headerStyle(
+                size: 30,
+                weight: FontWeight.bold,
+                color: ColorConstant.blueColor,
+              ),
+              value:
+                  '${packageDetailsResponse.packageTotalDays} days ${packageDetailsResponse.packageTotalNight} nights in ${packageDetailsResponse.packageTitle}',
             ),
-            value:
-                '${packageDetailsResponse.packageTotalDays} days ${packageDetailsResponse.packageTotalNight} nights in ${packageDetailsResponse.packageTitle}',
-          ),
-          const SizedBox(height: 5),
-          CustomDivier(
-              width: 150,
-              height: 2,
-              customColor: ColorConstant.blueColor,
-              edgeInsets: EdgeInsets.zero),
-          const SizedBox(height: 5),
-          Padding(
-              padding: const EdgeInsets.only(left: 5.0),
-              child: Row(
-                children: [
-                  TextWithIcon(
-                      icon: Icons.location_on,
-                      title: packageDetailsResponse.packageCity),
-                  const SizedBox(
-                    width: 15,
-                  ),
-                  RatingBar.builder(
-                    initialRating:
-                        packageDetailsResponse.packageAverageRating.toDouble(),
-                    itemCount:
-                        packageDetailsResponse.packageAverageRating.toInt(),
-                    glow: true,
-                    itemSize: 15.0,
-                    allowHalfRating: true,
-                    updateOnDrag: false,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Icon(
-                        Icons.star,
-                        color: ColorConstant.orangeColor,
-                      );
-                    },
-                    onRatingUpdate: (double value) {},
-                  ),
-                ],
-              )),
-          const SizedBox(
-            height: 10,
-          ),
-          TextView(
-              customColor: ColorConstant.blueColor,
-              value: packageDetailsResponse.packageInfo,
-              fontSize: 13,
-              align: TextAlign.left,
-              fontWeight: FontWeight.normal),
-          const SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              TextWithIcon(
-                  icon: Icons.bed_rounded,
-                  title:
-                      '${packageDetailsResponse.packageTotalDays} days ${packageDetailsResponse.packageTotalNight} nights'),
-              const SizedBox(
-                width: 30,
-              ),
-              TextWithIcon(icon: Icons.set_meal_rounded, title: 'Pure Veg'),
-            ],
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          Row(
-            children: [
-              rowDep(packageDetailsResponse),
-              const SizedBox(
-                width: 30,
-              ),
-              rowAReturn(packageDetailsResponse),
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              ContainerButton(
-                onTap: () {
-                  String url = Api.mainUrl + Api.file + widget.packageId;
-                  _launchURL(url);
-                },
-                title: "Download Broucher",
-                backGroundColor: ColorConstant.orangeColor,
-              ),
-              const SizedBox(
-                width: 20,
-              ),
-              ContainerButton(
+            const SizedBox(height: 5),
+            CustomDivier(
+                width: 150,
+                height: 2,
+                customColor: ColorConstant.blueColor,
+                edgeInsets: EdgeInsets.zero),
+            const SizedBox(height: 5),
+            Padding(
+                padding: const EdgeInsets.only(left: 5.0),
+                child: Row(
+                  children: [
+                    TextWithIcon(
+                        icon: Icons.location_on,
+                        title: packageDetailsResponse.packageCity),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    RatingBar.builder(
+                      initialRating: packageDetailsResponse.packageAverageRating
+                          .toDouble(),
+                      itemCount:
+                          packageDetailsResponse.packageAverageRating.toInt(),
+                      glow: true,
+                      itemSize: 15.0,
+                      allowHalfRating: true,
+                      updateOnDrag: false,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Icon(
+                          Icons.star,
+                          color: ColorConstant.orangeColor,
+                        );
+                      },
+                      onRatingUpdate: (double value) {},
+                    ),
+                  ],
+                )),
+            const SizedBox(
+              height: 10,
+            ),
+            TextView(
+                customColor: ColorConstant.blueColor,
+                value: packageDetailsResponse.packageInfo,
+                fontSize: 13,
+                align: TextAlign.left,
+                fontWeight: FontWeight.normal),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                TextWithIcon(
+                    icon: Icons.bed_rounded,
+                    title:
+                        '${packageDetailsResponse.packageTotalDays} days ${packageDetailsResponse.packageTotalNight} nights'),
+                const SizedBox(
+                  width: 30,
+                ),
+                TextWithIcon(icon: Icons.set_meal_rounded, title: 'Pure Veg'),
+              ],
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            Row(
+              children: [
+                rowDep(packageDetailsResponse),
+                const SizedBox(
+                  width: 30,
+                ),
+                rowAReturn(packageDetailsResponse),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                ContainerButton(
                   onTap: () {
-                    Get.toNamed(Routes.preBookingPackageDetails,
-                        arguments: [widget.packageId, costID]);
+                    String url = Api.mainUrl + Api.file + widget.packageId;
+                    _launchURL(url);
                   },
-                  title: "Book Now",
-                  backGroundColor: ColorConstant.blueColor),
-            ],
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          // SizedBox(
-          //   width: MediaQuery.of(context).size.width * 0.5,
-          //   height: MediaQuery.of(context).size.height * 0.10,
-          //   child: ListView.builder(
-          //     physics: const ClampingScrollPhysics(),
-          //     shrinkWrap: true,
-          //     scrollDirection: Axis.horizontal,
-          //     itemCount: packageDetailsResponse.packageGalleryLink.length,
-          //     itemBuilder: (BuildContext context, int index) =>
-          //         gestureDetector(index, packageDetailsResponse),
-          //   ),
-          // )
-        ],
+                  title: "Download Broacher",
+                  backGroundColor: ColorConstant.orangeColor,
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                ContainerButton(
+                    onTap: () {
+                      User? user = FirebaseAuth.instance.currentUser;
+                      if (user == null) {
+                        BeamState beamState = Beamer.of(context)
+                            .currentBeamLocation
+                            .state as BeamState;
+                        Beamer.of(context).beamToNamed(
+                            '${Routes.authentication}?type=Login',
+                            data: beamState.uri.toString());
+                      } else {
+                        BeamState beamState = Beamer.of(context)
+                            .currentBeamLocation
+                            .state as BeamState;
+                        Beamer.of(context).beamToNamed(
+                            '${Routes.preBookingPackageDetails}?id=${widget.packageId}&costId=$costID&title=${packageDetailsResponse.packageTitle}',
+                            data: beamState.uri.toString());
+                      }
+                    },
+                    title: "Book Now",
+                    backGroundColor: ColorConstant.blueColor),
+              ],
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.4,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -528,7 +527,7 @@ class _PackagesDetailsState extends State<PackagesDetails> {
         Get.defaultDialog(
           radius: 20.0,
           title: "Gallery",
-          content: Container(
+          content: SizedBox(
             width: 550,
             height: 550,
             child: Swiper(
@@ -587,7 +586,7 @@ class _PackagesDetailsState extends State<PackagesDetails> {
                 children: [
                   TextView(
                       customColor: ColorConstant.blackColor,
-                      value: '${packageDetailsResponse.packageEndDate}',
+                      value: packageDetailsResponse.packageEndDate,
                       fontSize: 12,
                       fontWeight: FontWeight.normal),
                   TextView(
@@ -625,7 +624,7 @@ class _PackagesDetailsState extends State<PackagesDetails> {
                 children: [
                   TextView(
                       customColor: ColorConstant.blackColor,
-                      value: '${packageDetailsResponse.packageStartDate}',
+                      value: packageDetailsResponse.packageStartDate,
                       fontSize: 12,
                       fontWeight: FontWeight.normal),
                   TextView(
