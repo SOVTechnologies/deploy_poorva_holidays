@@ -154,38 +154,71 @@ class TripDetails extends StatelessWidget {
                   return Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                TextView(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    value: userBookingController
+                                        .userbooking[index].packageTitle,
+                                    customColor: ColorConstant.blueColor),
+                                TextView(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.normal,
+                                    value:
+                                        'Start Date : ${userBookingController.userbooking[index].packageStartDate}',
+                                    customColor: ColorConstant.blueColor),
+                                TextView(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.normal,
+                                    value:
+                                        'End Date : ${userBookingController.userbooking[index].packageEndDate}',
+                                    customColor: ColorConstant.blueColor),
+                                TextView(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.normal,
+                                    value:
+                                        'Booking Date : ${userBookingController.userbooking[index].bookingDate}',
+                                    customColor: ColorConstant.blueColor),
+                                TextView(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.normal,
+                                    value:
+                                        'Booking Id : ${userBookingController.userbooking[index].bookingId}',
+                                    customColor: ColorConstant.blueColor),
+                              ],
+                            ),
+                            // Spacer(),
+                            // TextView(
+                            //     fontSize: 12,
+                            //     fontWeight: FontWeight.bold,
+                            //     value: userBookingController
+                            //         .userbooking[index].bookingMethod
+                            //         .toUpperCase(),
+                            //     customColor: ColorConstant.blueColor),
+                            const Spacer(),
                             TextView(
                                 fontSize: 12,
-                                fontWeight: FontWeight.normal,
-                                value: 'Package ID :${userBookingController.userbooking[index].bookingPackageId}',
-                                customColor: ColorConstant.blueColor),
-                            Spacer(),
-                            TextView(
-                                fontSize: 12,
-                                fontWeight: FontWeight.normal,
-                                value: '${userBookingController.userbooking[index].bookingMethod}',
-                                customColor: ColorConstant.blueColor),
-                            Spacer(),
-                            TextView(
-                                fontSize: 12,
-                                fontWeight: FontWeight.normal,
-                                value: '${userBookingController.userbooking[index].bookingStatus}',
-                                customColor: ColorConstant.blueColor),
+                                fontWeight: FontWeight.bold,
+                                value: userBookingController.userbooking[index]
+                                    .bookingStatus.capitalizeFirst,
+                                customColor: userBookingController
+                                            .userbooking[index].bookingStatus
+                                            .toLowerCase() ==
+                                        'active'
+                                    ? Colors.green
+                                    : ColorConstant.blueColor),
                           ],
                         ),
-                        SizedBox(width: 20,),
-                        TextView(
-                            fontSize: 12,
-                            fontWeight: FontWeight.normal,
-                            value: 'Date : ${userBookingController.userbooking[index].bookingDate}',
-                            customColor: ColorConstant.blueColor),
                       ],
                     ),
                   );
@@ -288,7 +321,6 @@ class DocumentDetails extends StatelessWidget {
         wordSpacing: 1);
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -297,7 +329,6 @@ class DocumentDetails extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-
           SizedBox(
             height: 30,
           ),
@@ -310,7 +341,6 @@ class DocumentDetails extends StatelessWidget {
     );
   }
 }
-
 
 class PersonalDetails extends StatelessWidget {
   UserController userController = Get.put(UserController());
@@ -328,7 +358,6 @@ class PersonalDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     userController.getUserByID(auth.currentUser!.uid);
     return Container(
       margin: const EdgeInsets.all(20),
@@ -552,8 +581,10 @@ class PersonalDetails extends StatelessWidget {
                 GovermentDocument governmentsDocuments = GovermentDocument();
                 governmentsDocuments.pan_card = userController.panNumber.text;
                 governmentsDocuments.aadhaar = userController.adhaarNumber.text;
-                governmentsDocuments.passport = userController.passportNumber.text;
-                governmentsDocuments.driving_license = userController.drivingLicense.text;
+                governmentsDocuments.passport =
+                    userController.passportNumber.text;
+                governmentsDocuments.driving_license =
+                    userController.drivingLicense.text;
                 poorvaUser.govermentDocument = governmentsDocuments;
 
                 userController.createUser(poorvaUser);

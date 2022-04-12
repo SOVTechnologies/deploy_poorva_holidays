@@ -281,7 +281,8 @@ class _BookNowState extends State<BookNow> {
                           widget.packageID,
                           user,
                           singlePackage.customCost,
-                          context);
+                          context,
+                          redirectLocation: widget.redirectLocation);
                     } else {
                       BeamState beamState = Beamer.of(context)
                           .currentBeamLocation

@@ -45,7 +45,8 @@ class BookingController extends GetxController {
   void onInit() {}
 
   getBookingID(double totalPrice, String argument, User user,
-      RxList<CustomCost> customCost, BuildContext context) async {
+      RxList<CustomCost> customCost, BuildContext context,
+      {String? redirectLocation}) async {
     if (costID.length == 0 && customCost[0].isSelected.isFalse) {
       snackbar(
         'Please select one package to proceed',
@@ -162,7 +163,8 @@ class BookingController extends GetxController {
         if (code == 200 || code == 201) {
           final boookinId = boookinIdFromJson(value.body);
 
-          generateOrder(argument, boookinId.bookingId, totalPrice, context);
+          generateOrder(argument, boookinId.bookingId, totalPrice, context,
+              redirectLocation: redirectLocation);
         } else {
           snackbar(value.body);
           _isPaymentGatewayCalled.value = false;
@@ -172,7 +174,8 @@ class BookingController extends GetxController {
   }
 
   generateOrder(String argument, String boookinId, double totalPrice,
-      BuildContext context) async {
+      BuildContext context,
+      {String? redirectLocation}) async {
     var body =
         '{ "package_id": "${argument}","cost": [1], "booking_id": "${boookinId}"}';
     // print('package_id ${body}');
@@ -192,6 +195,7 @@ class BookingController extends GetxController {
                     personalMobileNumber:
                         bookingPersonalDetails.personalMobileNumber,
                     personalName: bookingPersonalDetails.personalName,
+                    redirectLocation: redirectLocation,
                   )));
         } else {
           snackbar(value.body);
