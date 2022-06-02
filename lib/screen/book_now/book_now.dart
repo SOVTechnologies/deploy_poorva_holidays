@@ -273,7 +273,7 @@ class _BookNowState extends State<BookNow> {
                     if (user != null) {
                       setState(() {
                         finalPrice = double.parse((singlePackage.totalPrice +
-                                (singlePackage.totalPrice * 0.18))
+                                (singlePackage.totalPrice * 0.5))
                             .toStringAsFixed(2));
                       });
                       bookingController.getBookingID(

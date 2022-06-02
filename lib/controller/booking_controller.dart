@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:poorvaholiday/constant/color_constant.dart';
 import 'package:poorvaholiday/models/booking_child_detatils.dart';
 import 'package:poorvaholiday/models/booking_extra_bed_detatils.dart';
 import 'package:poorvaholiday/models/booking_personal_detatils.dart';
@@ -16,10 +15,6 @@ import 'package:poorvaholiday/models/order_response.dart';
 import 'package:poorvaholiday/payment/payment.dart';
 import 'package:poorvaholiday/remote_services/api.dart';
 import 'package:poorvaholiday/remote_services/api_calling.dart';
-import 'package:poorvaholiday/routes/routes.dart';
-import 'package:poorvaholiday/utils/WebPayment.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class BookingController extends GetxController {
   final _dataAvailable = false.obs;
@@ -47,14 +42,14 @@ class BookingController extends GetxController {
   getBookingID(double totalPrice, String argument, User user,
       RxList<CustomCost> customCost, BuildContext context,
       {String? redirectLocation}) async {
-    if (costID.length == 0 && customCost[0].isSelected.isFalse) {
+    if (costID.isEmpty && customCost[0].isSelected.isFalse) {
       snackbar(
         'Please select one package to proceed',
       );
       return;
     }
 
-    DateTime currentDate = new DateTime.now();
+    DateTime currentDate = DateTime.now();
     var date = '${currentDate.year}-${currentDate.month}-${currentDate.day}';
 
     if (customCost[0].isSelected.isTrue) {
@@ -151,7 +146,7 @@ class BookingController extends GetxController {
     }
 
     var body =
-        '{"booking_payment_status":"created","booking_date":"${date}","booking_rate":$totalPrice,"booking_user_id":"${user.uid}","booking_package_id":"$argument","booking_method":"upi","booking_status":"active",'
+        '{"booking_payment_status":"created","booking_date":"$date","booking_rate":$totalPrice,"booking_user_id":"${user.uid}","booking_package_id":"$argument","booking_method":"upi","booking_status":"active",'
         '"booking_guest_details":$jsonString}';
 
     // print(body);
@@ -177,7 +172,7 @@ class BookingController extends GetxController {
       BuildContext context,
       {String? redirectLocation}) async {
     var body =
-        '{ "package_id": "${argument}","cost": [1], "booking_id": "${boookinId}"}';
+        '{ "package_id": "$argument","cost": [1], "booking_id": "$boookinId"}';
     // print('package_id ${body}');
 
     await ApiCalling().postResponse(Api.mainUrl + Api.order, body).then(
