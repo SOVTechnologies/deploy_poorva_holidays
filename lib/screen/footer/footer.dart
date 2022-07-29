@@ -1,11 +1,10 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
 import 'package:poorvaholiday/constant/color_constant.dart';
 import 'package:poorvaholiday/screen/footer/payment_details.dart';
-import 'package:poorvaholiday/screen/widgets/poorva_logo.dart';
-import 'package:poorvaholiday/screen/widgets/sociamedia.dart';
 import 'package:poorvaholiday/screen/widgets/custom_text.dart';
+import 'package:poorvaholiday/screen/widgets/sociamedia.dart';
 import 'package:poorvaholiday/utils/responsive.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -42,7 +41,7 @@ class WebFotter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: ColorConstant.blueColor,
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       height: 360,
       child: Column(
         children: [
@@ -51,15 +50,15 @@ class WebFotter extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const Address(),
-              Spacer(),
+              const Spacer(),
               Reponsivenes.isLargeScreen(context)
-                  ? PaymentDetails()
+                  ? const PaymentDetails()
                   : Container(),
-              Spacer(),
+              const Spacer(),
               const FServices(),
-              Spacer(),
+              const Spacer(),
               const QuickLink(),
-              Spacer(),
+              const Spacer(),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -101,7 +100,7 @@ class WebFotter extends StatelessWidget {
                     fontSize: 14,
                     value: "Privacy Policy",
                     onPressed: () {
-                      Get.toNamed(Routes.privacyPolicy);
+                      Beamer.of(context).beamToNamed(Routes.privacyPolicy);
                     },
                   ),
                   const SizedBox(
@@ -111,7 +110,8 @@ class WebFotter extends StatelessWidget {
                     fontSize: 14,
                     value: "Cancellation & Refund Policy",
                     onPressed: () {
-                      Get.toNamed(Routes.cancellationPolicies);
+                      Beamer.of(context)
+                          .beamToNamed(Routes.cancellationPolicies);
                     },
                   ),
                   const SizedBox(
@@ -121,7 +121,7 @@ class WebFotter extends StatelessWidget {
                     fontSize: 14,
                     value: "Terms and Conditions",
                     onPressed: () {
-                      Get.toNamed(Routes.termsandConditions);
+                      Beamer.of(context).beamToNamed(Routes.termsandConditions);
                     },
                   ),
                   const Spacer(),

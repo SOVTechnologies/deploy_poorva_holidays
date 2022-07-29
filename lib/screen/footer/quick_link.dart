@@ -1,12 +1,7 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
 import 'package:poorvaholiday/constant/color_constant.dart';
-import 'package:poorvaholiday/screen/widgets/poorva_logo.dart';
-import 'package:poorvaholiday/screen/widgets/sociamedia.dart';
 import 'package:poorvaholiday/screen/widgets/custom_text.dart';
-import 'package:poorvaholiday/utils/responsive.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../routes/routes.dart';
 
@@ -32,8 +27,8 @@ class QuickLink extends StatelessWidget {
             height: 5,
           ),
           GestureDetector(
-            onTap: (){
-              Get.toNamed(Routes.home);
+            onTap: () {
+              Beamer.of(context).beamToNamed(Routes.home);
             },
             child: TextView(
                 customColor: ColorConstant.whiteColor,
@@ -45,8 +40,8 @@ class QuickLink extends StatelessWidget {
             height: 15,
           ),
           GestureDetector(
-            onTap: (){
-              Get.toNamed(Routes.aboutus);
+            onTap: () {
+              Beamer.of(context).beamToNamed(Routes.aboutus);
             },
             child: TextView(
                 customColor: ColorConstant.whiteColor,
@@ -58,8 +53,8 @@ class QuickLink extends StatelessWidget {
             height: 15,
           ),
           GestureDetector(
-            onTap: (){
-              Get.toNamed(Routes.contactus);
+            onTap: () {
+              Beamer.of(context).beamToNamed(Routes.contactus);
             },
             child: TextView(
                 customColor: ColorConstant.whiteColor,

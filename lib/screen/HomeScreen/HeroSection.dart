@@ -5,12 +5,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:poorvaholiday/constant/color_constant.dart';
 import 'package:poorvaholiday/helpers/Seo/renderers/text_renderer/text_renderer_style.dart';
 import 'package:poorvaholiday/screen/HomeScreen/widget/NewsLetter.dart';
-
 import 'package:poorvaholiday/screen/header/appbar.dart';
-import 'package:poorvaholiday/screen/widgets/container_radius_boxdecorations.dart';
 import 'package:poorvaholiday/screen/widgets/custom_text.dart';
 import 'package:poorvaholiday/screen/widgets/sociamedia.dart';
-
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -23,11 +20,11 @@ class Herosection extends StatefulWidget {
 
 class _HerosectionState extends State<Herosection> {
   List<String> imageName = [
-    'https://images.unsplash.com/photo-1617469165786-8007eda3caa7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-    'https://images.unsplash.com/photo-1611605645802-c21be743c321?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fG5lcGFsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-    'https://media.istockphoto.com/photos/holy-town-varanasi-and-the-river-ganges-picture-id827065008?b=1&k=20&m=827065008&s=170667a&w=0&h=YjToqYIXDJUZvgVFjW8K_WSPAODbZhwRPNcO8SjGo14=',
-    'https://images.unsplash.com/photo-1571536802807-30451e3955d8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dXR0YXIlMjBwcmFkZXNofGVufDB8MHwwfHw%3D&auto=format&fit=crop&w=500&q=60',
-    'https://images.unsplash.com/photo-1613445607898-f46e51645acf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8dXR0YXIlMjBwcmFkZXNofGVufDB8MHwwfHw%3D&auto=format&fit=crop&w=500&q=60'
+    'https://images.unsplash.com/photo-1596102390153-4eba8991035e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1673&q=80',
+    'https://images.unsplash.com/photo-1583912489026-898cdc54cbe0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+    'https://images.unsplash.com/photo-1601008789375-43bef29909db?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1566&q=80',
+    'https://images.unsplash.com/photo-1622718247639-d368a0ba7d23?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=873&q=80',
+    'https://images.unsplash.com/photo-1593202232429-549625b8660d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=873&q=80'
   ];
   int activeIndex = 0;
   void _launchURL(String url) async {

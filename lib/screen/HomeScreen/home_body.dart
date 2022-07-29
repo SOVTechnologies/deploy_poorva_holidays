@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-
 import 'package:poorvaholiday/controller/banner_controller.dart';
-
 import 'package:poorvaholiday/controller/top_controller.dart';
 import 'package:poorvaholiday/screen/HomeScreen/HeroSection.dart';
 import 'package:poorvaholiday/screen/HomeScreen/Reviews/Reviews.dart';
-
 import 'package:poorvaholiday/screen/HomeScreen/widget/About/AboutSection.dart';
 import 'package:poorvaholiday/screen/HomeScreen/widget/OurServices/OurServices.dart';
 import 'package:poorvaholiday/screen/HomeScreen/widget/TourSection/TourSection.dart';
 import 'package:poorvaholiday/screen/widgets/Loader/AnimatedLoader.dart';
-
 import 'package:url_launcher/url_launcher.dart';
 
 import '../footer/footer.dart';
@@ -50,12 +45,12 @@ class _HomeBodyState extends State<HomeBody> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // buildStack(context),
-                  Herosection(),
+                  const Herosection(),
                   const SizedBox(
                     height: 40,
                   ),
 
-                  AboutSection(),
+                  const AboutSection(),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,17 +66,19 @@ class _HomeBodyState extends State<HomeBody> {
                       const SizedBox(
                         height: 40,
                       ),
-                      TourSection(
-                        title: 'Domestic',
-                        tourList: topController.domestic,
-                      ),
+                      if (topController.domestic.isNotEmpty)
+                        TourSection(
+                          title: 'Domestic',
+                          tourList: topController.domestic,
+                        ),
                       const SizedBox(
                         height: 80,
                       ),
-                      TourSection(
-                        title: "International",
-                        tourList: topController.internationals,
-                      ),
+                      if (topController.internationals.isNotEmpty)
+                        TourSection(
+                          title: "International",
+                          tourList: topController.internationals,
+                        ),
                     ],
                   ),
                   const SizedBox(
@@ -99,7 +96,7 @@ class _HomeBodyState extends State<HomeBody> {
                     height: 80,
                   ),
                   // Services(),
-                  OurServices(),
+                  const OurServices(),
 
                   const SizedBox(
                     height: 80,

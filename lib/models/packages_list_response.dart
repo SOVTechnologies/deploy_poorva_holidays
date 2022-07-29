@@ -67,8 +67,8 @@ class PackagesListResponse {
   List<String> packageGalleryLink;
   String packageLocation;
   List<String> packageHotel;
-  dynamic packageFlight;
-  dynamic packageCruise;
+  String packageFlight;
+  String packageCruise;
   List<String> packageActivities;
   List<String> packageAvailability;
   String packageCost;
@@ -130,8 +130,8 @@ class PackagesListResponse {
         "package_country": packageCountry,
         "package_total_days": packageTotalDays,
         "package_total_night": packageTotalNight,
-        "package_start_date":packageStartDate,
-        "package_end_date":packageEndDate,
+        "package_start_date": packageStartDate,
+        "package_end_date": packageEndDate,
         "package_offers": List<dynamic>.from(packageOffers.map((x) => x)),
         "package_theme": List<dynamic>.from(packageTheme.map((x) => x)),
         "package_season": packageSeason,
